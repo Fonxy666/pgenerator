@@ -816,11 +816,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
-      "projectName": "PGenerator",
-      "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
+      "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\DatabaseLibrary.csproj",
+      "projectName": "DatabaseLibrary",
+      "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\DatabaseLibrary.csproj",
       "packagesPath": "C:\\Users\\vikto\\.nuget\\packages\\",
-      "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\obj\\",
+      "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vikto\\AppData\\Roaming\\NuGet\\NuGet.Config"
