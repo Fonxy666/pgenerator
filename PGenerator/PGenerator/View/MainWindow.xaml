@@ -3,10 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PGenerator"
+        xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <viewModel:UserViewModel x:Key="ViewModel"/>
+    </Window.Resources>
+    
+   <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Grid ShowGridLines="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left" Margin="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Usernametxt"
+                     Text="{ Binding Username ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
+            <Label  Grid.Row="1" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" Margin="5"/>
+            <PasswordBox Grid.Row="1" Grid.Column="1" Name="Passwordtxt" HorizontalAlignment="Left"
+                         PasswordChanged="PasswordBox_PasswordChanged"
+                         MinWidth="130" VerticalAlignment="Center"/>
+            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10"/>
+        </Grid>
     </Grid>
 </Window>

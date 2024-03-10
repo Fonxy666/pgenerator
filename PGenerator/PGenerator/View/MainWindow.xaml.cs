@@ -1,14 +1,20 @@
 ﻿using System.Windows;
 
-namespace PGenerator.View;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace PGenerator.View
 {
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ViewModel.UserViewModel viewModel)
+            {
+                viewModel.Password = ((System.Windows.Controls.PasswordBox)sender).Password;
+            }
+        }
     }
 }
