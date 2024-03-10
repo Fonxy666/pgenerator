@@ -12,4 +12,20 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="ViewModel\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="View\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>
