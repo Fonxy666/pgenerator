@@ -8,4 +8,9 @@ public partial class Registration : Window
     {
         InitializeComponent();
     }
+    
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
 }

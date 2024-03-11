@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a82ba07c2548c5c59b71378fe56131e86d4b522")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58d829e4d6c6475b9a05f3fd093e9f7e23ce767e")]
 [assembly: System.Reflection.AssemblyProductAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
