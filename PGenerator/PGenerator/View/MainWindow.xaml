@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
-        <viewModel:UserViewModel x:Key="ViewModel"/>
+        <viewModel:UserViewModel x:Key="UserViewModel"/>
     </Window.Resources>
     
    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -33,7 +33,7 @@
                          PasswordChanged="PasswordBox_PasswordChanged"
                          MinWidth="130" VerticalAlignment="Center"/>
             <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=RegisterCommand}"/>
         </Grid>
     </Grid>
 </Window>
