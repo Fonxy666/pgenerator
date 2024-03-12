@@ -6,7 +6,7 @@ namespace PGenerator.Data;
 
 public class StorageContext : DbContext
 {
-    public DbSet<Storage> Datas { get; set; }
+    public DbSet<Information> Information { get; set; }
 
     public StorageContext(DbContextOptions<StorageContext> options) : base(options) { }
     

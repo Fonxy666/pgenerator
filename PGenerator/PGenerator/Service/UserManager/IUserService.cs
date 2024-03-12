@@ -7,8 +7,8 @@ namespace PGenerator.Service.UserManager;
 public interface IUserService
 {
     Task<IList<User>> ListUsers();
-    Task<UserResponse> Registration(RegistrationRequest request);
-    Task<UserResponse> Login(LoginRequest request);
-    Task<UserResponse> ChangePassword(string userId, string oldPassword, string newPassword);
-    Task<UserResponse> DeleteUser(string userId);
+    Task<PublicResponse> Registration(RegistrationRequest request);
+    Task<PublicResponse> Login(LoginRequest request);
+    Task<PublicResponse> ChangePassword(string userId, string oldPassword, string newPassword);
+    Task<PublicResponse> DeleteUser(string userId);
 }

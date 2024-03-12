@@ -21,18 +21,18 @@ public class UserService(UserManager<User> userManager) : IUserService
         }
     }
 
-    public async Task<UserResponse> Registration(RegistrationRequest request)
+    public async Task<PublicResponse> Registration(RegistrationRequest request)
     {
         try
         {
             if (userManager.Users.Any(user => user.Email == request.Email))
             {
-                return new UserResponse(false, "Email already in use.");
+                return new PublicResponse(false, "Email already in use.");
             }
             
             if (userManager.Users.Any(user => user.UserName == request.UserName))
             {
-                return new UserResponse(false, "Username already in use.");
+                return new PublicResponse(false, "Username already in use.");
             }
             
             var user = new User
@@ -42,7 +42,7 @@ public class UserService(UserManager<User> userManager) : IUserService
             };
 
             await userManager.CreateAsync(user, request.Password);
-            return new UserResponse(true, "Registration successful.");
+            return new PublicResponse(true, "Registration successful.");
         }
         catch (Exception e)
         {
@@ -51,7 +51,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         }
     }
 
-    public async Task<UserResponse> Login(LoginRequest request)
+    public async Task<PublicResponse> Login(LoginRequest request)
     {
         try
         {
@@ -59,16 +59,16 @@ public class UserService(UserManager<User> userManager) : IUserService
             
             if (existingUser == null)
             {
-                return new UserResponse(false, "Invalid username or password.");
+                return new PublicResponse(false, "Invalid username or password.");
             }
 
             var isPasswordValid = await userManager.CheckPasswordAsync(existingUser!, request.Password);
             if (!isPasswordValid)
             {
-                return new UserResponse(false, "Wrong password.");
+                return new PublicResponse(false, "Wrong password.");
             }
 
-            return new UserResponse(true, "");
+            return new PublicResponse(true, "");
         }
         catch (Exception e)
         {
@@ -77,7 +77,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         }
     }
 
-    public async Task<UserResponse> ChangePassword(string userId, string oldPassword, string newPassword)
+    public async Task<PublicResponse> ChangePassword(string userId, string oldPassword, string newPassword)
     {
         try
         {
@@ -85,12 +85,12 @@ public class UserService(UserManager<User> userManager) : IUserService
 
             if (existingUser == null)
             {
-                return new UserResponse(false, "User not exist");
+                return new PublicResponse(false, "User not exist");
             }
 
             await userManager.ChangePasswordAsync(existingUser, oldPassword, newPassword);
             
-            return new UserResponse(true, "Successful update.");
+            return new PublicResponse(true, "Successful update.");
         }
         catch (Exception e)
         {
@@ -99,7 +99,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         }
     }
 
-    public async Task<UserResponse> DeleteUser(string userId)
+    public async Task<PublicResponse> DeleteUser(string userId)
     {
         try
         {
@@ -107,12 +107,12 @@ public class UserService(UserManager<User> userManager) : IUserService
 
             if (existingUser == null)
             {
-                return new UserResponse(false, "User not exist");
+                return new PublicResponse(false, "User not exist");
             }
 
             await userManager.DeleteAsync(existingUser);
             
-            return new UserResponse(true, "Successful delete.");
+            return new PublicResponse(true, "Successful delete.");
         }
         catch (Exception e)
         {

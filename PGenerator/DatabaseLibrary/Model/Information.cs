@@ -2,7 +2,7 @@
 
 namespace DatabaseLibrary.Model;
 
-public class Storage(Guid userId, string? application, string? userName, string? password)
+public class Information(Guid userId, string? application, string? userName, string? password)
 {
     [Key]
     public Guid Id { get; set; }
