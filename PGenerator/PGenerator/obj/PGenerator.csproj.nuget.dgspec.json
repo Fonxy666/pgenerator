@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj": {}
+    "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj": {}
   },
   "projects": {
     "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\DatabaseLibrary.csproj": {
@@ -42,6 +42,12 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.2, )"
@@ -70,14 +76,14 @@
         }
       }
     },
-    "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj": {
+    "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
+        "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj",
         "projectName": "PGenerator",
-        "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
+        "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj",
         "packagesPath": "C:\\Users\\vikto\\.nuget\\packages\\",
-        "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\obj\\",
+        "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vikto\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -112,9 +118,31 @@
               "target": "Package",
               "version": "[8.0.2, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration.UserSecrets": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
