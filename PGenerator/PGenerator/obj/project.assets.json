@@ -1786,23 +1786,6 @@
             "rid": "win"
           }
         }
-      },
-      "DatabaseLibrary/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.2",
-          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.2"
-        },
-        "compile": {
-          "bin/placeholder/DatabaseLibrary.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DatabaseLibrary.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
       }
     }
   },
@@ -4719,16 +4702,10 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "DatabaseLibrary/1.0.0": {
-      "type": "project",
-      "path": "../DatabaseLibrary/DatabaseLibrary.csproj",
-      "msbuildProject": "../DatabaseLibrary/DatabaseLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "DatabaseLibrary >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.2",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.2",
@@ -4744,11 +4721,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj",
+      "projectUniqueName": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
       "projectName": "PGenerator",
-      "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj",
+      "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
       "packagesPath": "C:\\Users\\vikto\\.nuget\\packages\\",
-      "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\obj\\",
+      "outputPath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vikto\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4762,11 +4739,7 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {
-            "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\DatabaseLibrary.csproj": {
-              "projectPath": "D:\\after codecool\\pgenerator\\PGenerator\\DatabaseLibrary\\DatabaseLibrary.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

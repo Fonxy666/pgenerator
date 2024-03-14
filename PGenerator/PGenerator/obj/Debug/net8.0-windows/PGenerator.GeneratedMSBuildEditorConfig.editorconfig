@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PGenerator
-build_property.ProjectDir = D:\after codecool\pgenerator\PGenerator\pgenerator\
+build_property.ProjectDir = D:\after codecool\pgenerator\PGenerator\PGenerator\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

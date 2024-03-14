@@ -1,6 +1,6 @@
-﻿using DatabaseLibrary.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PGenerator.Model;
 
 namespace PGenerator.Data;
 

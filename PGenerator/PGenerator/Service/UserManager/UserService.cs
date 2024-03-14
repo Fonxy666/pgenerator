@@ -1,7 +1,7 @@
-﻿using DatabaseLibrary.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PGenerator.Response;
 using Microsoft.AspNetCore.Identity;
+using PGenerator.Model;
 using PGenerator.Request;
 
 namespace PGenerator.Service.UserManager;

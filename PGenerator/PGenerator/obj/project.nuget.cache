@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oVN4UrmgNVD2LdI+iNqy35ilnkBOw8a1bx9aWitkO3salS1RHNoqQw73tP3K6wjLwLHlblj5M94ZLWUEaUSvcg==",
+  "dgSpecHash": "Y70UpILf6fIcYqEnG5uiS3U0Vc3ZF3+UQZ+D2gYuvC++e1y5g5MQ2uPQfjpC6hNyRu1Svlj8/iLOaywKLgI9AA==",
   "success": true,
-  "projectFilePath": "D:\\after codecool\\pgenerator\\PGenerator\\pgenerator\\PGenerator.csproj",
+  "projectFilePath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vikto\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGenerator", "PGenerator\PGenerator.csproj", "{AC6581BF-56DA-4BAE-B7F8-77B2CF8681FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLibrary", "DatabaseLibrary\DatabaseLibrary.csproj", "{B9F1C8DF-EF35-4C7A-A43E-330437CF1E3E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,9 +12,5 @@ Global
 		{AC6581BF-56DA-4BAE-B7F8-77B2CF8681FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6581BF-56DA-4BAE-B7F8-77B2CF8681FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6581BF-56DA-4BAE-B7F8-77B2CF8681FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9F1C8DF-EF35-4C7A-A43E-330437CF1E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9F1C8DF-EF35-4C7A-A43E-330437CF1E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9F1C8DF-EF35-4C7A-A43E-330437CF1E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9F1C8DF-EF35-4C7A-A43E-330437CF1E3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

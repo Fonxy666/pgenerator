@@ -26,14 +26,14 @@
             
             <Label Grid.Row="0" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left" Margin="5"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Usernametxt"
-                     Text="{ Binding Username ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding Source={StaticResource UserViewModel}, Path=UserName}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
             <Label  Grid.Row="1" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" Margin="5"/>
-            <PasswordBox Grid.Row="1" Grid.Column="1" Name="Passwordtxt" HorizontalAlignment="Left"
-                         PasswordChanged="PasswordBox_PasswordChanged"
-                         MinWidth="130" VerticalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=RegisterCommand}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="Passwordtxt" HorizontalAlignment="Left"
+                     Text="{Binding Source={StaticResource UserViewModel}, Path=Password}"
+                     MinWidth="130" VerticalAlignment="Center"/>
+            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=LoginCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=ShowRegisterModal}"/>
         </Grid>
     </Grid>
 </Window>

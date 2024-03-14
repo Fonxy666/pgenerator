@@ -6,6 +6,20 @@ namespace PGenerator.ViewModel
 {
     public class UserViewModel : NotifyPropertyChangedHandler
     {
+        private string _userName;
+
+        public string UserName
+        {
+            get => _userName; 
+            set
+            {
+                if (_userName != value)
+                {
+                    _userName = value;
+                }
+            }
+        }
+        
         private string _password;
 
         public string Password
@@ -20,16 +34,16 @@ namespace PGenerator.ViewModel
             }
         }
         
-        private RelayCommand _registerCommand;
-        public ICommand RegisterCommand
+        private RelayCommand _showRegisterModal;
+        public ICommand ShowRegisterModal
         {
             get
             {
-                if (_registerCommand == null)
+                if (_showRegisterModal == null)
                 {
-                    _registerCommand = new RelayCommand(param => ShowRegistrationModal(), null);
+                    _showRegisterModal = new RelayCommand(param => ShowRegistrationModal(), null);
                 }
-                return _registerCommand;
+                return _showRegisterModal;
             }
         }
 
@@ -37,6 +51,25 @@ namespace PGenerator.ViewModel
         {
             var registrationWindow = new Registration();
             registrationWindow.ShowDialog();
+        }
+        
+        private RelayCommand _loginCommand;
+        public ICommand LoginCommand
+        {
+            get
+            {
+                if (_loginCommand == null)
+                {
+                    _loginCommand = new RelayCommand(param => Login(), null);
+                }
+                return _loginCommand;
+            }
+        }
+
+        private void Login()
+        {
+            Console.WriteLine(UserName);
+            Console.WriteLine(Password);
         }
     }
 }

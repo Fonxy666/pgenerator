@@ -3,14 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         mc:Ignorable="d"
         Title="Registration" Height="250" Width="300">
-    <Grid>
+    
+    <Window.DataContext>
+        <viewModel:RegistrationViewModel />
+    </Window.DataContext>
+    
+    <Grid >
         <Grid ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -19,21 +26,25 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Usernametxt"
-                     Text="{ Binding BrandName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Emailtxt"
+                     Text="{ Binding RegistrationRequest.Email ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label  Grid.Row="1" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
-            <PasswordBox Grid.Row="1" Grid.Column="1"  Name="Passwordtxt"  HorizontalAlignment="Left" 
-                     PasswordChanged="PasswordBox_PasswordChanged"
+            <Label Grid.Row="1" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="Usernametxt"
+                     Text="{ Binding RegistrationRequest.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
+            <Label  Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
+            <TextBox Grid.Row="2" Grid.Column="1"  Name="Passwordtxt"  HorizontalAlignment="Left" 
+                     Text="{Binding Password}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <Label  Grid.Row="2" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Left" Width="103" />
-            <PasswordBox Grid.Row="2" Grid.Column="1"  Name="RepeatPasswordtxt"  HorizontalAlignment="Left"
-                     PasswordChanged="RepeatPasswordBox_PasswordChanged"
+            <Label  Grid.Row="3" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Left" Width="103" />
+            <TextBox Grid.Row="3" Grid.Column="1"  Name="RepeatPasswordtxt"  HorizontalAlignment="Left"
+                     Text="{Binding PasswordRepeat}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="130" Text="Passwords do not match!" Visibility="Collapsed"/>
-            <Button Grid.Row="4" Grid.Column="0" Content="Register" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Click="Registration_Click"/>
-            <Button Grid.Row="4" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Click="BackButton_Click"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="130" Text="Passwords do not match!" Visibility="{Binding ErrorMessageVisibility}"/>
+            <Button Grid.Row="5" Grid.Column="0" Content="Register" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding RegistrationCommand}"/>
+            <Button Grid.Row="5" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding BackCommand}"/>
         </Grid>
     </Grid>
 </Window>

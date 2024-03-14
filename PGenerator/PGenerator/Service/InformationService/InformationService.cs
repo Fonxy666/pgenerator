@@ -1,4 +1,4 @@
-﻿using DatabaseLibrary.Model;
+﻿using PGenerator.Model;
 using PGenerator.Response;
 
 namespace PGenerator.Service.InformationService;

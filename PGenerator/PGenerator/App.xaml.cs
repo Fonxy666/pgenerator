@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PGenerator.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using PGenerator.Service.UserManager;
 
 namespace PGenerator;
 
@@ -16,19 +18,22 @@ public partial class App : Application
     {
         base.OnStartup(e);
         
-
-        IConfigurationRoot config = new ConfigurationBuilder()
+        var config = new ConfigurationBuilder()
             .AddUserSecrets<App>()
             .Build();
 
-        var usersContextBuilder = new DbContextOptionsBuilder<UsersContext>();
-        usersContextBuilder.UseSqlServer(config["ConnectionString"]);
-        UserDb = new UsersContext(usersContextBuilder.Options);
-        UserDb.Database.Migrate();
+        var serviceProvider = new ServiceCollection()
+            .AddDbContext<UsersContext>(options =>
+                options.UseSqlServer(config["ConnectionString"]))
+            .AddDbContext<StorageContext>(options =>
+                options.UseSqlServer(config["ConnectionString"]))
+            .AddSingleton<UserService>()
+            .BuildServiceProvider();
         
-        var storageContextBuilder = new DbContextOptionsBuilder<StorageContext>();
-        storageContextBuilder.UseSqlServer(config["ConnectionString"]);
-        StorageDb = new StorageContext(storageContextBuilder.Options);
+        UserDb = serviceProvider.GetRequiredService<UsersContext>();
+        StorageDb = serviceProvider.GetRequiredService<StorageContext>();
+
+        UserDb.Database.Migrate();
         StorageDb.Database.Migrate();
     }
 

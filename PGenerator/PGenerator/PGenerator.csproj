@@ -23,10 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DatabaseLibrary\DatabaseLibrary.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Page Update="View\LoginWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>

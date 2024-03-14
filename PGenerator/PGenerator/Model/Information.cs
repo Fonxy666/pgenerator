@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DatabaseLibrary.Model;
+namespace PGenerator.Model;
 
 public class Information(Guid userId, string? application, string? userName, string? password)
 {

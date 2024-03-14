@@ -1,6 +1,4 @@
-﻿using DatabaseLibrary.Model;
-
-namespace PGenerator.Service.PasswordGenerator;
+﻿namespace PGenerator.Service.PasswordGenerator;
 
 public static class PasswordGenerator
 {

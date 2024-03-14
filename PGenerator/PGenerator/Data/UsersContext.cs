@@ -1,8 +1,8 @@
-﻿using DatabaseLibrary.Model;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PGenerator.Model;
 
 namespace PGenerator.Data;
 
