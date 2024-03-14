@@ -67,6 +67,14 @@
             "Microsoft.Extensions.Configuration.UserSecrets": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.0-preview.2.24128.5, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

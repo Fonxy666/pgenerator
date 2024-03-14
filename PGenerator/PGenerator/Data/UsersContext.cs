@@ -6,7 +6,7 @@ using PGenerator.Model;
 
 namespace PGenerator.Data;
 
-public class UsersContext : IdentityDbContext<User, IdentityRole, string>
+public class UsersContext : IdentityDbContext<UserInformation, IdentityRole, string>
 {
     public UsersContext(DbContextOptions<UsersContext> options) : base(options) { }
     

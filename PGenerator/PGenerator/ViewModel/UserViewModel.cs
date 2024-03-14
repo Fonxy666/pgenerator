@@ -6,6 +6,8 @@ namespace PGenerator.ViewModel
 {
     public class UserViewModel : NotifyPropertyChangedHandler
     {
+        public UserViewModel() { }
+        
         private string _userName;
 
         public string UserName
@@ -49,11 +51,12 @@ namespace PGenerator.ViewModel
 
         public void ShowRegistrationModal()
         {
-            var registrationWindow = new Registration();
-            registrationWindow.ShowDialog();
+            /*var registrationWindow = new Registration();*/
+            /*registrationWindow.ShowDialog();*/
         }
         
         private RelayCommand _loginCommand;
+
         public ICommand LoginCommand
         {
             get

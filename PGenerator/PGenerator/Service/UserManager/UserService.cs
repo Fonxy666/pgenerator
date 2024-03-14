@@ -6,9 +6,9 @@ using PGenerator.Request;
 
 namespace PGenerator.Service.UserManager;
 
-public class UserService(UserManager<User> userManager) : IUserService
+public class UserService(UserManager<UserInformation> userManager) : IUserService
 {
-    public async Task<IList<User>> ListUsers()
+    public async Task<IList<UserInformation>> ListUsers()
     {
         try
         {
@@ -23,6 +23,7 @@ public class UserService(UserManager<User> userManager) : IUserService
 
     public async Task<PublicResponse> Registration(RegistrationRequest request)
     {
+        Console.WriteLine(request);
         try
         {
             if (userManager.Users.Any(user => user.Email == request.Email))
@@ -35,7 +36,7 @@ public class UserService(UserManager<User> userManager) : IUserService
                 return new PublicResponse(false, "Username already in use.");
             }
             
-            var user = new User
+            var user = new UserInformation
             {
                 UserName = request.UserName,
                 Email = request.Email

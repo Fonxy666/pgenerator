@@ -2,18 +2,21 @@
 using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Request;
+using PGenerator.Service.UserManager;
 
 namespace PGenerator.ViewModel;
 
 public class RegistrationViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
+    private readonly IUserService _userService;
     
     public RegistrationViewModel() {}
     
-    public RegistrationViewModel(Window window)
+    public RegistrationViewModel(Window window, IUserService userService)
     {
         _window = window;
+        _userService = userService;
         RegistrationRequest = new RegistrationRequest("", "", "");
     }
     
@@ -47,6 +50,7 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
     {
         if (CheckPasswordsMatch())
         {
+            _userService.Registration(RegistrationRequest);
             BackMethod();
         }
         else
@@ -81,7 +85,13 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         
         if (Password != null && PasswordRepeat != null)
         {
-            returningValue = Password == PasswordRepeat;
+            if (Password == PasswordRepeat)
+            {
+                RegistrationRequest.Password = Password;
+                return true;
+            }
+
+            return false;
         }
         
         return returningValue;

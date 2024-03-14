@@ -2,4 +2,4 @@
 
 namespace PGenerator.Model;
 
-public class User : IdentityUser { }
+public class UserInformation : IdentityUser { }
