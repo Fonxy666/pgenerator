@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using PGenerator.Response;
 using Microsoft.AspNetCore.Identity;
 using PGenerator.Model;
@@ -23,9 +24,29 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
 
     public async Task<PublicResponse> Registration(RegistrationRequest request)
     {
-        Console.WriteLine(request);
         try
         {
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(request, new ValidationContext(request), validationResults, true))
+            {
+                var errorMessages = validationResults.Select(vr => vr.ErrorMessage);
+                foreach (var errorMessage in errorMessages)
+                {
+                    switch (errorMessage)
+                    {
+                        case "The field Password must be a string or array type with a minimum length of '8'.":
+                            return new PublicResponse(false, "Password length minimum 8.");
+                        
+                        case @"The field Password must match the regular expression '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$'.":
+                            return new PublicResponse(false, "Password should contain number & symbol.");
+                        
+                        case "The Email field is not a valid e-mail address.":
+                            return new PublicResponse(false, "Not a valid e-mail address.");
+                    }
+                    Console.WriteLine(errorMessage);
+                }
+            }
+            
             if (userManager.Users.Any(user => user.Email == request.Email))
             {
                 return new PublicResponse(false, "Email already in use.");
@@ -42,7 +63,7 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
                 Email = request.Email
             };
 
-            await userManager.CreateAsync(user, request.Password);
+            await userManager.CreateAsync(user, request.Password!);
             return new PublicResponse(true, "Registration successful.");
         }
         catch (Exception e)
@@ -56,7 +77,10 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
     {
         try
         {
-            var existingUser = await userManager.FindByNameAsync(request.UserName);
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine(request.UserName);
+            Console.WriteLine(request.Password);
+            /*var existingUser = await userManager.FindByNameAsync(request.UserName);
             
             if (existingUser == null)
             {
@@ -67,7 +91,7 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
             if (!isPasswordValid)
             {
                 return new PublicResponse(false, "Wrong password.");
-            }
+            }*/
 
             return new PublicResponse(true, "");
         }

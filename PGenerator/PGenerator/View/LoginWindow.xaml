@@ -8,9 +8,9 @@
         Title="LoginWindow" Height="350" Width="500"
         WindowStartupLocation="CenterScreen">
     
-    <Window.Resources>
-        <viewModel:UserViewModel x:Key="UserViewModel"/>
-    </Window.Resources>
+    <Window.DataContext>
+        <viewModel:LoginViewModel />
+    </Window.DataContext>
     
    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
         <Grid ShowGridLines="False">
@@ -26,14 +26,14 @@
             
             <Label Grid.Row="0" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left" Margin="5"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Usernametxt"
-                     Text="{Binding Source={StaticResource UserViewModel}, Path=UserName}"
+                     Text="{Binding UserName}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
             <Label  Grid.Row="1" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" Margin="5"/>
             <TextBox Grid.Row="1" Grid.Column="1" Name="Passwordtxt" HorizontalAlignment="Left"
-                     Text="{Binding Source={StaticResource UserViewModel}, Path=Password}"
+                     Text="{Binding Password}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=LoginCommand}"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding Source={StaticResource UserViewModel}, Path=ShowRegisterModal}"/>
+            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10" Command="{Binding LoginCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding ShowRegisterModal}"/>
         </Grid>
     </Grid>
 </Window>

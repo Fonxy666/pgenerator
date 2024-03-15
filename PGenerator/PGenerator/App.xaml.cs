@@ -31,7 +31,7 @@ public partial class App : Application
                     options.UseSqlServer(configuration["ConnectionString"]));
                 services.AddDbContext<StorageContext>(options =>
                     options.UseSqlServer(configuration["ConnectionString"]));
-                services.AddSingleton<LoginWindow>();
+                services.AddScoped<LoginWindow>();
                 services.AddScoped<Registration>();
                 services.AddIdentityCore<UserInformation>(options =>
                     {
@@ -59,7 +59,7 @@ public partial class App : Application
         await AppHost!.StartAsync();
         var serviceProvider = AppHost.Services;
 
-        var registerWindow = serviceProvider.GetService<Registration>();
+        var registerWindow = serviceProvider.GetService<LoginWindow>();
 
         registerWindow!.UserService = serviceProvider.GetService<IUserService>()!;
 

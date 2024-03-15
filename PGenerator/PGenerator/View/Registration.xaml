@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         mc:Ignorable="d"
-        Title="Registration" Height="250" Width="300">
+        Title="Registration" Height="250" Width="400"
+        WindowStartupLocation="CenterScreen">
     
     <Window.DataContext>
         <viewModel:RegistrationViewModel />
@@ -22,8 +23,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             
             <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Left"/>
@@ -42,7 +43,8 @@
             <TextBox Grid.Row="3" Grid.Column="1"  Name="RepeatPasswordtxt"  HorizontalAlignment="Left"
                      Text="{Binding PasswordRepeat}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="130" Text="Passwords do not match!" Visibility="{Binding ErrorMessageVisibility}"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Width="400" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}"
+                       TextWrapping="Wrap"/>
             <Button Grid.Row="5" Grid.Column="0" Content="Register" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding RegistrationCommand}"/>
             <Button Grid.Row="5" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding BackCommand}"/>
         </Grid>

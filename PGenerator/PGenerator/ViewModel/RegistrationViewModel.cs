@@ -20,6 +20,17 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         RegistrationRequest = new RegistrationRequest("", "", "");
     }
     
+    private string _errorMessage;
+
+    public string ErrorMessage
+    {
+        get => _errorMessage;
+        set
+        {
+            _errorMessage = value; NotifyPropertyChanged(nameof(ErrorMessage));
+        }
+    }
+    
     private RegistrationRequest? _registrationRequest;
 
     public RegistrationRequest RegistrationRequest
@@ -46,15 +57,24 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         }
     }
 
-    private void Registration()
+    private async void Registration()
     {
         if (CheckPasswordsMatch())
         {
-            _userService.Registration(RegistrationRequest);
-            BackMethod();
+            var result = await _userService.Registration(RegistrationRequest);
+            if (!result.Success)
+            {
+                ErrorMessage = result.Message;
+                ErrorMessageVisibility = Visibility.Visible;
+            }
+            else
+            {
+                BackMethod();
+            }
         }
         else
         {
+            ErrorMessage = "Passwords do not match.";
             ErrorMessageVisibility = Visibility.Visible;
         }
     }
