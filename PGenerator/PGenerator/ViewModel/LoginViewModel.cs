@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using PGenerator.ICommandUpdater;
+using PGenerator.Request;
 using PGenerator.Service.UserManager;
 using PGenerator.View;
 
@@ -78,10 +79,42 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             return _loginCommand;
         }
     }
+    
+    private string _errorMessage;
 
-    private void Login()
+    public string ErrorMessage
     {
-        var haha = _userService.ListUsers().Result[0].UserName;
-        Console.WriteLine(haha);
+        get => _errorMessage;
+        set
+        {
+            _errorMessage = value; NotifyPropertyChanged(nameof(ErrorMessage));
+        }
+    }
+    
+    private Visibility _errorMessageVisibility = Visibility.Collapsed;
+
+    public Visibility ErrorMessageVisibility
+    {
+        get => _errorMessageVisibility;
+        set
+        {
+            _errorMessageVisibility = value;
+            NotifyPropertyChanged(nameof(ErrorMessageVisibility));
+        }
+    }
+
+    private async void Login()
+    {
+        var request = new LoginRequest(UserName, Password);
+        var result = await _userService.Login(request);
+        if (result.Success)
+        {
+            ErrorMessageVisibility = Visibility.Hidden;
+        }
+        else
+        {
+            ErrorMessage = result.Message;
+            ErrorMessageVisibility = Visibility.Visible;
+        }
     }
 }

@@ -18,28 +18,28 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Left"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Right"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Emailtxt"
                      Text="{ Binding RegistrationRequest.Email ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label Grid.Row="1" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Username:"  HorizontalAlignment="Right"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="Usernametxt"
                      Text="{ Binding RegistrationRequest.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label  Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
+            <Label  Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Right" Width="103" />
             <TextBox Grid.Row="2" Grid.Column="1"  Name="Passwordtxt"  HorizontalAlignment="Left" 
                      Text="{Binding Password}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <Label  Grid.Row="3" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Left" Width="103" />
+            <Label  Grid.Row="3" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Right" Width="103" />
             <TextBox Grid.Row="3" Grid.Column="1"  Name="RepeatPasswordtxt"  HorizontalAlignment="Left"
                      Text="{Binding PasswordRepeat}"
                      MinWidth="130" VerticalAlignment="Center"/>

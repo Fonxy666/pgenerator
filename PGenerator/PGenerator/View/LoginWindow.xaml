@@ -18,7 +18,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -34,6 +36,8 @@
                      MinWidth="130" VerticalAlignment="Center"/>
             <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10" Command="{Binding LoginCommand}"/>
             <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding ShowRegisterModal}"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}"
+                       TextWrapping="Wrap"/>
         </Grid>
     </Grid>
 </Window>

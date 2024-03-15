@@ -77,10 +77,7 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
     {
         try
         {
-            Console.WriteLine("--------------------------------------");
-            Console.WriteLine(request.UserName);
-            Console.WriteLine(request.Password);
-            /*var existingUser = await userManager.FindByNameAsync(request.UserName);
+            var existingUser = await userManager.FindByNameAsync(request.UserName);
             
             if (existingUser == null)
             {
@@ -90,8 +87,8 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
             var isPasswordValid = await userManager.CheckPasswordAsync(existingUser!, request.Password);
             if (!isPasswordValid)
             {
-                return new PublicResponse(false, "Wrong password.");
-            }*/
+                return new PublicResponse(false, "Invalid username or password.");
+            }
 
             return new PublicResponse(true, "");
         }
