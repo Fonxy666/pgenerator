@@ -1,11 +1,16 @@
-﻿using System.Windows;
+﻿using System.Text;
+using System.Windows;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PGenerator.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using PGenerator.Model;
+using PGenerator.Service.AuthService;
 using PGenerator.Service.UserManager;
 using PGenerator.View;
 using StartupEventArgs = System.Windows.StartupEventArgs;
@@ -22,17 +27,36 @@ public partial class App : Application
             .AddUserSecrets<App>();
 
         var configuration = builder.Build();
+        var connectionString = configuration["ConnectionString"];
+        var issueAudience = configuration["IssueAudience"];
+        var issueSign = configuration["IssueSign"];
         
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContent, services) =>
             {
+                services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IUserService, UserService>();
-                services.AddDbContext<UsersContext>(options =>
-                    options.UseSqlServer(configuration["ConnectionString"]));
-                services.AddDbContext<StorageContext>(options =>
-                    options.UseSqlServer(configuration["ConnectionString"]));
                 services.AddScoped<LoginWindow>();
                 services.AddScoped<Registration>();
+                services.AddDbContext<UsersContext>(options =>
+                    options.UseSqlServer(connectionString));
+                services.AddDbContext<StorageContext>(options =>
+                    options.UseSqlServer(connectionString));
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ClockSkew = TimeSpan.Zero,
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = issueAudience,
+                            ValidAudience = issueAudience,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issueSign!))
+                        };
+                    });
                 services.AddIdentityCore<UserInformation>(options =>
                     {
                         options.SignIn.RequireConfirmedAccount = false;
@@ -59,12 +83,12 @@ public partial class App : Application
         await AppHost!.StartAsync();
         var serviceProvider = AppHost.Services;
 
-        var registerWindow = serviceProvider.GetService<LoginWindow>();
+        var loginWindow = serviceProvider.GetService<LoginWindow>();
+        loginWindow!.TokenService = serviceProvider.GetService<ITokenService>()!;
+        loginWindow!.UserService = serviceProvider.GetService<IUserService>()!;
 
-        registerWindow!.UserService = serviceProvider.GetService<IUserService>()!;
-
-        MainWindow = registerWindow;
-        registerWindow.Show();
+        MainWindow = loginWindow;
+        loginWindow.Show();
         base.OnStartup(e);
     }
 

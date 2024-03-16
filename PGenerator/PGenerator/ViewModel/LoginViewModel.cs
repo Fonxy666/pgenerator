@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Request;
+using PGenerator.Service.AuthService;
 using PGenerator.Service.UserManager;
 using PGenerator.View;
 
@@ -11,12 +12,14 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
     private readonly IUserService _userService;
+    private readonly ITokenService _tokenService;
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService)
     {
         _window = window;
         _userService = userService;
+        _tokenService = tokenService;
     }
     
     private string _userName;
