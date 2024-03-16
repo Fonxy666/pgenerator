@@ -74,8 +74,23 @@ public partial class App : Application
                     })
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<UsersContext>();
+                SeedRoles(services.BuildServiceProvider()).Wait();
             })
             .Build();
+    }
+    
+    private static async Task SeedRoles(IServiceProvider serviceProvider)
+    {
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        if (!await roleManager.RoleExistsAsync("Admin"))
+        {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+        }
+        if (!await roleManager.RoleExistsAsync("User"))
+        {
+            await roleManager.CreateAsync(new IdentityRole("User"));
+        }
     }
 
     protected override async void OnStartup(StartupEventArgs e)
