@@ -1,17 +1,18 @@
 ﻿using System.Text;
 using System.Windows;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PGenerator.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PGenerator.Model;
 using PGenerator.Service.AuthService;
 using PGenerator.Service.UserManager;
+using PGenerator.TokenStorageFolder;
 using PGenerator.View;
 using StartupEventArgs = System.Windows.StartupEventArgs;
 
@@ -31,13 +32,18 @@ public partial class App : Application
         var issueAudience = configuration["IssueAudience"];
         var issueSign = configuration["IssueSign"];
         
+        var dataProtectionProvider = DataProtectionProvider.Create("YourApplicationName");
+        
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContent, services) =>
             {
                 services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IUserService, UserService>();
+                services.AddScoped<ITokenStorage, TokenStorage>();
                 services.AddScoped<LoginWindow>();
-                services.AddScoped<Registration>();
+                services.AddScoped<RegistrationWindow>();
+                services.AddSingleton<IConfiguration>(configuration);
+                services.AddSingleton<IDataProtectionProvider>(dataProtectionProvider);
                 services.AddDbContext<UsersContext>(options =>
                     options.UseSqlServer(connectionString));
                 services.AddDbContext<StorageContext>(options =>

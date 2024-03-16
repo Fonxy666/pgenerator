@@ -4,6 +4,7 @@ using PGenerator.ICommandUpdater;
 using PGenerator.Request;
 using PGenerator.Service.AuthService;
 using PGenerator.Service.UserManager;
+using PGenerator.TokenStorageFolder;
 using PGenerator.View;
 
 namespace PGenerator.ViewModel;
@@ -13,13 +14,15 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly Window _window;
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
+    private readonly ITokenStorage _tokenStorage;
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage)
     {
         _window = window;
         _userService = userService;
         _tokenService = tokenService;
+        _tokenStorage = tokenStorage;
     }
     
     private string _userName;
@@ -65,7 +68,7 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
     public void ShowRegistrationModal()
     {
-        var registrationWindow = new Registration(_userService);
+        var registrationWindow = new RegistrationWindow(_userService);
         registrationWindow.ShowDialog();
     }
     
@@ -112,11 +115,14 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         var result = await _userService.Login(request);
         if (result.Success)
         {
+            var jwtToken = _tokenService.CreateJwtToken(result.User!, "User");
+            await _tokenStorage.SaveTokenAsync(jwtToken);
+            await _tokenStorage.ReadTokenAsync();
             ErrorMessageVisibility = Visibility.Hidden;
         }
         else
         {
-            ErrorMessage = result.Message;
+            ErrorMessage = result.Message!;
             ErrorMessageVisibility = Visibility.Visible;
         }
     }

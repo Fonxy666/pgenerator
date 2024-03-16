@@ -73,7 +73,7 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
         }
     }
 
-    public async Task<PublicResponse> Login(LoginRequest request)
+    public async Task<LoginResponse> Login(LoginRequest request)
     {
         try
         {
@@ -81,16 +81,16 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
             
             if (existingUser == null)
             {
-                return new PublicResponse(false, "Invalid username or password.");
+                return new LoginResponse(null, "Invalid username or password.", false);
             }
 
             var isPasswordValid = await userManager.CheckPasswordAsync(existingUser!, request.Password);
             if (!isPasswordValid)
             {
-                return new PublicResponse(false, "Invalid username or password.");
+                return new LoginResponse(null, "Invalid username or password.", false);
             }
 
-            return new PublicResponse(true, "");
+            return new LoginResponse(existingUser, "", true);
         }
         catch (Exception e)
         {

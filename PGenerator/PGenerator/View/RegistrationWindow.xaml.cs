@@ -4,12 +4,12 @@ using PGenerator.ViewModel;
 
 namespace PGenerator.View;
 
-public partial class Registration : Window
+public partial class RegistrationWindow : Window
 {
     public IUserService UserService { get; set; }
 
-    public Registration() { }
-    public Registration(IUserService userService)
+    public RegistrationWindow() { }
+    public RegistrationWindow(IUserService userService)
     {
         InitializeComponent();
         UserService = userService;
