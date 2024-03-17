@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PGenerator.Model;
 using PGenerator.Service.AuthService;
+using PGenerator.Service.InformationService;
 using PGenerator.Service.UserManager;
 using PGenerator.TokenStorageFolder;
 using PGenerator.View;
@@ -40,8 +41,10 @@ public partial class App : Application
                 services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<ITokenStorage, TokenStorage>();
+                services.AddScoped<IInformationService, InformationService>();
                 services.AddScoped<LoginWindow>();
                 services.AddScoped<RegistrationWindow>();
+                services.AddScoped<DatabaseWindow>();
                 services.AddSingleton<IConfiguration>(configuration);
                 services.AddSingleton<IDataProtectionProvider>(dataProtectionProvider);
                 services.AddDbContext<UsersContext>(options =>
@@ -106,7 +109,8 @@ public partial class App : Application
 
         var loginWindow = serviceProvider.GetService<LoginWindow>();
         loginWindow!.TokenService = serviceProvider.GetService<ITokenService>()!;
-        loginWindow!.UserService = serviceProvider.GetService<IUserService>()!;
+        loginWindow.UserService = serviceProvider.GetService<IUserService>()!;
+        loginWindow.InformationService = serviceProvider.GetService<InformationService>()!;
 
         MainWindow = loginWindow;
         loginWindow.Show();

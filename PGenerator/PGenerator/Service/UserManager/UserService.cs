@@ -38,12 +38,11 @@ public class UserService(UserManager<UserInformation> userManager) : IUserServic
                             return new PublicResponse(false, "Password length minimum 8.");
                         
                         case @"The field Password must match the regular expression '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$'.":
-                            return new PublicResponse(false, "Password should contain number & symbol.");
+                            return new PublicResponse(false, "Password should contain number & symbol & uppercase letters.");
                         
                         case "The Email field is not a valid e-mail address.":
                             return new PublicResponse(false, "Not a valid e-mail address.");
                     }
-                    Console.WriteLine(errorMessage);
                 }
             }
             
