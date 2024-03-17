@@ -7,7 +7,7 @@ namespace PGenerator.View;
 public partial class DatabaseWindow : Window
 {
     public DatabaseWindow() { }
-    public DatabaseWindow(IInformationService informationService, string userId)
+    public DatabaseWindow(IInformationService informationService, Guid userId)
     {
         InitializeComponent();
         DataContext = new DatabaseViewModel(informationService, userId);

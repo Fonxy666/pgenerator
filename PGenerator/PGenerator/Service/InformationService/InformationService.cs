@@ -1,18 +1,37 @@
-﻿using PGenerator.Model;
+﻿using PGenerator.Data;
+using PGenerator.Model;
 using PGenerator.Response;
 
 namespace PGenerator.Service.InformationService;
 
-public class InformationService : IInformationService
+public class InformationService(StorageContext context) : IInformationService
 {
-    public Task<IList<Information>> ListInformation(string userId)
+    private StorageContext Context { get; set; } = context;
+    public async Task<IList<Information>> ListInformation(Guid userId)
     {
-        throw new NotImplementedException();
+        return Context.Information.Where(information => information.UserId == userId).ToList();
     }
 
-    public Task<PublicResponse> AddNewInfo(Information request)
+    public async Task<PublicResponse> AddNewInfo(Information request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!CheckApplicationExist(request.Application!))
+            {
+                await Context.Information.AddAsync(request);
+                await Context.SaveChangesAsync();
+                return new PublicResponse(true, string.Empty);
+            }
+            else
+            {
+                return new PublicResponse(false, "Application is already in the database.");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public Task<PublicResponse> UpdatePassword(Information request, string infoId)
@@ -23,5 +42,10 @@ public class InformationService : IInformationService
     public Task<PublicResponse> DeleteInfo(string userId, string oldPassword, string newPassword)
     {
         throw new NotImplementedException();
+    }
+
+    private bool CheckApplicationExist(string application)
+    {
+        return Context.Information.Any(info => info.Application == application);
     }
 }

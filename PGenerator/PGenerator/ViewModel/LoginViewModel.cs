@@ -106,11 +106,14 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             var jwtToken = _tokenService.CreateJwtToken(result.User!, "User");
             await _tokenStorage.SaveTokenAsync(jwtToken);
 
-            var databaseWindow = new DatabaseWindow(_informationService, result.User!.Id);
-            databaseWindow.ShowDialog();
-            
-            _window.Close();
-            ErrorMessageVisibility = Visibility.Hidden;
+            if (Guid.TryParse(result.User!.Id, out var guid))
+            {
+                var databaseWindow = new DatabaseWindow(_informationService, guid);
+                databaseWindow.ShowDialog();
+                
+                _window.Close();
+                ErrorMessageVisibility = Visibility.Hidden;
+            }
         }
         else
         {

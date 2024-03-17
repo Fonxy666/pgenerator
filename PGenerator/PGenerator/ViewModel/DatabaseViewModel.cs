@@ -5,25 +5,36 @@ using PGenerator.Service.InformationService;
 
 namespace PGenerator.ViewModel;
 
-public class DatabaseViewModel
+public class DatabaseViewModel : NotifyPropertyChangedHandler
 {
     private readonly IInformationService _informationService;
-    private readonly string _userId;
+    private readonly Guid _userId;
     private ICommand _addCommand;
-    public IList<UserInformation> Information { get; set; }
+    public IList<Information> Information { get; set; }
 
     public DatabaseViewModel() { }
-    public DatabaseViewModel(IInformationService informationService, string userId)
+    public DatabaseViewModel(IInformationService informationService, Guid userId)
     {
         _informationService = informationService;
-        _userId = userId;/*
-        Information = FetchData();*/
+        _userId = userId;
+        FetchData();
+    }
+    
+    private Information _selectedInformation;
+
+    public Information SelectedInformation
+    {
+        get => _selectedInformation;
+        set
+        {
+            _selectedInformation = value; NotifyPropertyChanged(nameof(SelectedInformation));
+        }
     }
 
-    /*private IList<UserInformation> FetchData()
+    private async Task FetchData()
     {
-        return _informationService.ListInformation(_userId);
-    }*/
+        Information = await _informationService.ListInformation(_userId);
+    }
     
     public ICommand AddCommand
     {
@@ -40,6 +51,6 @@ public class DatabaseViewModel
 
     private void AddNewInfo()
     {
-        Console.WriteLine("haha");
+        
     }
 }
