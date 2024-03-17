@@ -2,6 +2,7 @@
 using PGenerator.ICommandUpdater;
 using PGenerator.Model;
 using PGenerator.Service.InformationService;
+using PGenerator.View;
 
 namespace PGenerator.ViewModel;
 
@@ -51,6 +52,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void AddNewInfo()
     {
-        
+        var informationWindow = new InformationWindow();
+        informationWindow.ShowDialog();
     }
 }

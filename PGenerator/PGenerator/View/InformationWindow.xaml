@@ -3,10 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:PGenerator.View"
+        xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         mc:Ignorable="d"
         Title="InformationWindow" Height="450" Width="800">
+    
+    <Window.DataContext>
+        <viewModel:InformationViewModel />
+    </Window.DataContext>
+    
     <Grid>
-        
+        <Grid ShowGridLines="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Left" />
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
+                     Text="{ Binding Information ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
+            <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
+                     Text="{ Binding Color ,Mode=TwoWay}"
+                     MinWidth="130" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
+            <TextBox Grid.Row="2" Grid.Column="1" Name="Colortxt"  HorizontalAlignment="Left"
+                     Text="{ Binding Color ,Mode=TwoWay}"
+                     MinWidth="130" VerticalAlignment="Center"/>
+            <Button Content="Generate password" Grid.Row="2" Grid.Column="2"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="Add"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Back"/>
+        </Grid>
     </Grid>
 </Window>
