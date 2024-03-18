@@ -17,15 +17,19 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly ITokenService _tokenService;
     private readonly ITokenStorage _tokenStorage;
     private readonly IInformationService _informationService;
+    private readonly byte[] _secretKey;
+    private readonly byte[] _iv;
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService, byte[] secretKey, byte[] iv)
     {
         _window = window;
         _userService = userService;
         _tokenService = tokenService;
         _tokenStorage = tokenStorage;
         _informationService = informationService;
+        _secretKey = secretKey;
+        _iv = iv;
         _loginRequest = new LoginRequest(string.Empty, string.Empty);
     }
 
@@ -108,11 +112,11 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
             if (Guid.TryParse(result.User!.Id, out var guid))
             {
-                var databaseWindow = new DatabaseWindow(_informationService, guid);
-                databaseWindow.ShowDialog();
-                
-                _window.Close();
+                var databaseWindow = new DatabaseWindow(_informationService, guid, _secretKey, _iv);
                 ErrorMessageVisibility = Visibility.Hidden;
+                _window.Close();
+                
+                databaseWindow.ShowDialog();
             }
         }
         else

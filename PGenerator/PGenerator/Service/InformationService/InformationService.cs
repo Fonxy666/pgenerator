@@ -1,15 +1,26 @@
 ﻿using PGenerator.Data;
 using PGenerator.Model;
 using PGenerator.Response;
+using PGenerator.Service.PasswordService;
 
 namespace PGenerator.Service.InformationService;
 
-public class InformationService(StorageContext context) : IInformationService
+public class InformationService(StorageContext context, byte[] secretKey, byte[] iv) : IInformationService
 {
     private StorageContext Context { get; set; } = context;
-    public async Task<IList<Information>> ListInformation(Guid userId)
+    public IList<Database> ListInformation(Guid userId)
     {
-        return Context.Information.Where(information => information.UserId == userId).ToList();
+        var existingList = Context.Information.Where(information => information.UserId == userId).ToList();
+        var newList = new List<Database>();
+        for (var i = 0; i < existingList.Count; i++)
+        {
+            var newPassword = PasswordEncrypt.DecryptStringFromBytes_Aes(existingList[i].Password, secretKey, iv);
+            var newElement = new Database(existingList[i].Application!, existingList[i].UserName!, newPassword,
+                existingList[i].Created);
+            newList.Add(newElement);
+        }
+
+        return newList;
     }
 
     public async Task<PublicResponse> AddNewInfo(Information request)

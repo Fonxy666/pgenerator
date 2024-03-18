@@ -33,7 +33,32 @@
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             CanUserAddRows="false"
             SelectedItem="{Binding SelectedInformation}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Application" Width="100" Binding="{Binding Application}"/>
+                <DataGridTextColumn Header="Username" Width="100" Binding="{Binding Username}"/>
+                <DataGridTextColumn Header="Password" Width="100" Binding="{Binding Password}"/>
+                <DataGridTemplateColumn Header="Purchase" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Created, StringFormat=yyyy-MM-dd}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delete" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Update" Command="{Binding DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delete" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Delete" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
 </Window>

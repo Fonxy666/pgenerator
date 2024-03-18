@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5ccbdb7205c1e8d5039dbec7625186c00f41175")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea3e7845bddecd81be169d9558266d9f6a401460")]
 [assembly: System.Reflection.AssemblyProductAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PGenerator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

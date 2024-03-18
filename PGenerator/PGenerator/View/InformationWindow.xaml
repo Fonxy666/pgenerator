@@ -27,19 +27,19 @@
             
             <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Left" />
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
-                     Text="{ Binding Information ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{ Binding Information.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
             <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
             <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
-                     Text="{ Binding Color ,Mode=TwoWay}"
+                     Text="{ Binding Information.UserName ,Mode=TwoWay}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <Label Grid.Row="2" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
-            <TextBox Grid.Row="2" Grid.Column="1" Name="Colortxt"  HorizontalAlignment="Left"
-                     Text="{ Binding Color ,Mode=TwoWay}"
+            <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
+            <TextBox Grid.Row="2" Grid.Column="1" Name="Passwordtxt"  HorizontalAlignment="Left"
+                     Text="{ Binding Password ,Mode=TwoWay}"
                      MinWidth="130" VerticalAlignment="Center"/>
-            <Button Content="Generate password" Grid.Row="2" Grid.Column="2"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="Add"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Back"/>
+            <Button Content="Generate password" Grid.Row="2" Grid.Column="2" Command="{Binding GeneratePasswordCommand}"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="Add" Command="{Binding AddCommand}"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Back" Command="{Binding BackCommand}"/>
         </Grid>
     </Grid>
 </Window>

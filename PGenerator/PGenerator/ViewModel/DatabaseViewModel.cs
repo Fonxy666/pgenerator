@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Model;
+using PGenerator.Response;
 using PGenerator.Service.InformationService;
 using PGenerator.View;
 
@@ -11,14 +12,30 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private readonly IInformationService _informationService;
     private readonly Guid _userId;
     private ICommand _addCommand;
-    public IList<Information> Information { get; set; }
+    private readonly byte[] _secretKey;
+    private readonly byte[] _iv;
 
     public DatabaseViewModel() { }
-    public DatabaseViewModel(IInformationService informationService, Guid userId)
+    public DatabaseViewModel(IInformationService informationService, Guid userId, byte[] secretKey, byte[] iv)
     {
         _informationService = informationService;
         _userId = userId;
+        _secretKey = secretKey;
+        _iv = iv;
+        Information = new List<Database>();
         FetchData();
+    }
+    
+    private IList<Database> _information;
+
+    public IList<Database> Information
+    {
+        get => _information;
+        set
+        {
+            _information = value;
+            NotifyPropertyChanged(nameof(Information));
+        }
     }
     
     private Information _selectedInformation;
@@ -28,13 +45,15 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         get => _selectedInformation;
         set
         {
-            _selectedInformation = value; NotifyPropertyChanged(nameof(SelectedInformation));
+            _selectedInformation = value;
+            NotifyPropertyChanged(nameof(SelectedInformation));
         }
     }
 
-    private async Task FetchData()
+    private void FetchData()
     {
-        Information = await _informationService.ListInformation(_userId);
+        Information = _informationService.ListInformation(_userId);
+        NotifyPropertyChanged(nameof(Information));
     }
     
     public ICommand AddCommand
@@ -52,7 +71,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void AddNewInfo()
     {
-        var informationWindow = new InformationWindow();
+        var informationWindow = new InformationWindow(_userId, _informationService, _secretKey, _iv);
         informationWindow.ShowDialog();
     }
 }
