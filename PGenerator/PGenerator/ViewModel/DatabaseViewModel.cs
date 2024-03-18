@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Forms;
+using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Model;
 using PGenerator.Response;
@@ -12,6 +13,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private readonly IInformationService _informationService;
     private readonly Guid _userId;
     private ICommand _addCommand;
+    private ICommand _deleteCommand;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
 
@@ -22,6 +24,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         _userId = userId;
         _secretKey = secretKey;
         _iv = iv;
+        SelectedInformation = new Database(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, DateTime.Now);
         Information = new List<Database>();
         FetchData();
     }
@@ -34,13 +37,13 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         set
         {
             _information = value;
-            NotifyPropertyChanged(nameof(Information));
+            NotifyPropertyChanged("Information");
         }
     }
     
-    private Information _selectedInformation;
+    private Database _selectedInformation;
 
-    public Information SelectedInformation
+    public Database SelectedInformation
     {
         get => _selectedInformation;
         set
@@ -73,5 +76,29 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     {
         var informationWindow = new InformationWindow(_userId, _informationService, _secretKey, _iv);
         informationWindow.ShowDialog();
+        FetchData();
+    }
+    
+    public ICommand DeleteCommand
+    {
+        get
+        {
+            if (_deleteCommand == null)
+            {
+                _deleteCommand = new RelayCommand(param => DeleteInfo(), null);
+            }
+
+            return _deleteCommand;
+        }
+    }
+
+    private async void DeleteInfo()
+    {
+        var result = await _informationService.DeleteInfo(SelectedInformation.MessageId);
+        if (result.Success)
+        {
+            MessageBox.Show($"Info for application: {SelectedInformation.Application} got deleted successfully.");
+            FetchData();
+        }
     }
 }

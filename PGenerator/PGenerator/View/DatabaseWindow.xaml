@@ -34,6 +34,7 @@
             CanUserAddRows="false"
             SelectedItem="{Binding SelectedInformation}">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="100" Binding="{Binding MessageId}"/>
                 <DataGridTextColumn Header="Application" Width="100" Binding="{Binding Application}"/>
                 <DataGridTextColumn Header="Username" Width="100" Binding="{Binding Username}"/>
                 <DataGridTextColumn Header="Password" Width="100" Binding="{Binding Password}"/>

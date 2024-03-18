@@ -15,7 +15,7 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         for (var i = 0; i < existingList.Count; i++)
         {
             var newPassword = PasswordEncrypt.DecryptStringFromBytes_Aes(existingList[i].Password, secretKey, iv);
-            var newElement = new Database(existingList[i].Application!, existingList[i].UserName!, newPassword,
+            var newElement = new Database(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
                 existingList[i].Created);
             newList.Add(newElement);
         }
@@ -50,9 +50,21 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         throw new NotImplementedException();
     }
 
-    public Task<PublicResponse> DeleteInfo(string userId, string oldPassword, string newPassword)
+    public async Task<PublicResponse> DeleteInfo(Guid messageId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == messageId);
+            Context.Information.Remove(existingInfo!);
+            await Context.SaveChangesAsync();
+
+            return new PublicResponse(true, string.Empty);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     private bool CheckApplicationExist(string application)
