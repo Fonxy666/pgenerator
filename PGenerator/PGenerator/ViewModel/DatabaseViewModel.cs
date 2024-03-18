@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Model;
+using PGenerator.Request;
 using PGenerator.Response;
 using PGenerator.Service.InformationService;
 using PGenerator.View;
@@ -13,6 +14,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private readonly IInformationService _informationService;
     private readonly Guid _userId;
     private ICommand _addCommand;
+    private ICommand _updateCommand;
     private ICommand _deleteCommand;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
@@ -79,6 +81,32 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         FetchData();
     }
     
+    public ICommand UpdateCommand
+    {
+        get
+        {
+            if (_updateCommand == null)
+            {
+                _updateCommand = new RelayCommand(param => UpdateInfo(), null);
+            }
+
+            return _updateCommand;
+        }
+    }
+
+    private async void UpdateInfo()
+    {
+        var updateRequest = new UpdateRequest(SelectedInformation.Application, SelectedInformation.Username,
+            SelectedInformation.Password);
+        var result =  await _informationService.UpdateInfo(updateRequest, SelectedInformation.InfoId);
+
+        if (result.Success)
+        {
+            MessageBox.Show($"Info for application: {SelectedInformation.Application} got updated successfully.");
+            FetchData();
+        }
+    }
+
     public ICommand DeleteCommand
     {
         get
@@ -94,7 +122,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private async void DeleteInfo()
     {
-        var result = await _informationService.DeleteInfo(SelectedInformation.MessageId);
+        var result = await _informationService.DeleteInfo(SelectedInformation.InfoId);
         if (result.Success)
         {
             MessageBox.Show($"Info for application: {SelectedInformation.Application} got deleted successfully.");

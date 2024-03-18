@@ -1,5 +1,6 @@
 ﻿using PGenerator.Data;
 using PGenerator.Model;
+using PGenerator.Request;
 using PGenerator.Response;
 using PGenerator.Service.PasswordService;
 
@@ -45,16 +46,40 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         }
     }
 
-    public Task<PublicResponse> UpdatePassword(Information request, string infoId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<PublicResponse> DeleteInfo(Guid messageId)
+    public async Task<PublicResponse> UpdateInfo(UpdateRequest request, Guid infoId)
     {
         try
         {
-            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == messageId);
+            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == infoId);
+            if (existingInfo != null)
+            {
+                existingInfo.UserName = request.UserName;
+                existingInfo.Application = request.Application;
+                existingInfo.Password = PasswordEncrypt.EncryptStringToBytes_Aes(request.Password!, secretKey, iv);
+
+                Context.Update(existingInfo);
+
+                await Context.SaveChangesAsync();
+
+                return new PublicResponse(true, string.Empty);
+            }
+            else
+            {
+                return new PublicResponse(false, "Cannot find info with this id.");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<PublicResponse> DeleteInfo(Guid infoId)
+    {
+        try
+        {
+            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == infoId);
             Context.Information.Remove(existingInfo!);
             await Context.SaveChangesAsync();
 
