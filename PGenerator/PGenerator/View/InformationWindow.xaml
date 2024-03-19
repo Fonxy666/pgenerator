@@ -38,7 +38,7 @@
                      Text="{ Binding Password ,Mode=TwoWay}"
                      MinWidth="130" VerticalAlignment="Center"/>
             <Button Content="Generate password" Grid.Row="2" Grid.Column="2" Command="{Binding GeneratePasswordCommand}"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="Add" Command="{Binding AddCommand}"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="{Binding AccountButton}" Command="{Binding AccountButtonCommand}"/>
             <Button Grid.Row="3" Grid.Column="1" Content="Back" Command="{Binding BackCommand}"/>
         </Grid>
     </Grid>

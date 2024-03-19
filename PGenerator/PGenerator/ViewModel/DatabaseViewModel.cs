@@ -5,6 +5,7 @@ using PGenerator.Model;
 using PGenerator.Request;
 using PGenerator.Response;
 using PGenerator.Service.InformationService;
+using PGenerator.Service.PasswordService;
 using PGenerator.View;
 
 namespace PGenerator.ViewModel;
@@ -94,17 +95,15 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         }
     }
 
-    private async void UpdateInfo()
+    private void UpdateInfo()
     {
-        var updateRequest = new UpdateRequest(SelectedInformation.Application, SelectedInformation.Username,
-            SelectedInformation.Password);
-        var result =  await _informationService.UpdateInfo(updateRequest, SelectedInformation.InfoId);
-
-        if (result.Success)
+        var newInfo = new Information(_userId, SelectedInformation.Application, SelectedInformation.Username, PasswordEncrypt.EncryptStringToBytes_Aes(SelectedInformation.Password, _secretKey, _iv))
         {
-            MessageBox.Show($"Info for application: {SelectedInformation.Application} got updated successfully.");
-            FetchData();
-        }
+            Id = SelectedInformation.InfoId
+        };
+        var informationWindow = new InformationWindow(newInfo, _informationService, _secretKey, _iv);
+        informationWindow.ShowDialog();
+        FetchData();
     }
 
     public ICommand DeleteCommand

@@ -24,6 +24,19 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         return newList;
     }
 
+    public async Task<Information> GetInformation(Guid infoId)
+    {
+        try
+        {
+            return Context.Information.FirstOrDefault(info => info.Id == infoId)!;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     public async Task<PublicResponse> AddNewInfo(Information request)
     {
         try
@@ -48,6 +61,7 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
 
     public async Task<PublicResponse> UpdateInfo(UpdateRequest request, Guid infoId)
     {
+        Console.WriteLine(infoId);
         try
         {
             var existingInfo = Context.Information.FirstOrDefault(info => info.Id == infoId);
