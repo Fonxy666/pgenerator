@@ -5,19 +5,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         mc:Ignorable="d"
-        Title="InformationWindow" Height="450" Width="800">
+        Title="InformationWindow" Height="300" Width="450">
     
     <Window.DataContext>
         <viewModel:InformationViewModel />
     </Window.DataContext>
     
     <Grid>
-        <Grid ShowGridLines="False">
+        <Grid ShowGridLines="False" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
@@ -25,21 +25,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Left" />
+            <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Right" Margin="0,5,5,5"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
                      Text="{ Binding AccountDetail.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
+            <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Right" Margin="0,5,5,5"/>
             <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
                      Text="{ Binding AccountDetail.UserName ,Mode=TwoWay}"
-                     MinWidth="130" VerticalAlignment="Center"/>
-            <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
+                     MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
+            <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Right"/>
             <TextBox Grid.Row="2" Grid.Column="1" Name="Passwordtxt"  HorizontalAlignment="Left"
                      Text="{ Binding Password ,Mode=TwoWay}"
-                     MinWidth="130" VerticalAlignment="Center"/>
-            <Button Content="Generate password" Grid.Row="2" Grid.Column="2" Command="{Binding GeneratePasswordCommand}"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="{Binding AccountButton}" Command="{Binding AccountButtonCommand}"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Back" Command="{Binding BackCommand}"/>
+                     MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
+            <Button Content="Generate password" Grid.Row="2" Grid.Column="2" Height="18" Command="{Binding GeneratePasswordCommand}" Margin="5,5,5,5" Padding="20,0,20,0"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="{Binding AccountButton}" Command="{Binding AccountButtonCommand}" Margin="0,50,5,5" VerticalAlignment="Center"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" Margin="0,50,5,5" Width="80" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>
