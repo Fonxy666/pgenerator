@@ -11,10 +11,10 @@ namespace PGenerator.View
     {
         public LoginWindow() { }
         
-        public LoginWindow(IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService, byte[] secretKey, byte[] iv)
+        public LoginWindow(IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
         {
             InitializeComponent();
-            DataContext = new LoginViewModel(this, userService, tokenService, tokenStorage, informationService, secretKey, iv);
+            DataContext = new LoginViewModel(this, userService, tokenService, tokenStorage, accountDetailService, secretKey, iv);
         }
     }
 }

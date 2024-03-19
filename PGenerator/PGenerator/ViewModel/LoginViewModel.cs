@@ -16,24 +16,28 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
     private readonly ITokenStorage _tokenStorage;
-    private readonly IInformationService _informationService;
+    private readonly IAccountDetailService _accountDetailService;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
+    private LoginRequest _loginRequest;
+    private RelayCommand _showRegisterModal;
+    private RelayCommand _loginCommand;
+    private string _errorMessage;
+    private Visibility _errorMessageVisibility = Visibility.Collapsed;
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService, byte[] secretKey, byte[] iv)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
     {
         _window = window;
         _userService = userService;
         _tokenService = tokenService;
         _tokenStorage = tokenStorage;
-        _informationService = informationService;
+        _accountDetailService = accountDetailService;
         _secretKey = secretKey;
         _iv = iv;
         _loginRequest = new LoginRequest(string.Empty, string.Empty);
     }
-
-    private LoginRequest _loginRequest;
+    
     public LoginRequest LoginRequest
     {
         get => _loginRequest; 
@@ -46,7 +50,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private RelayCommand _showRegisterModal;
     public ICommand ShowRegisterModal
     {
         get
@@ -65,8 +68,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         registrationWindow.ShowDialog();
     }
     
-    private RelayCommand _loginCommand;
-
     public ICommand LoginCommand
     {
         get
@@ -79,8 +80,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private string _errorMessage;
-
     public string ErrorMessage
     {
         get => _errorMessage;
@@ -90,8 +89,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private Visibility _errorMessageVisibility = Visibility.Collapsed;
-
     public Visibility ErrorMessageVisibility
     {
         get => _errorMessageVisibility;
@@ -112,7 +109,7 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
             if (Guid.TryParse(result.User!.Id, out var guid))
             {
-                var databaseWindow = new DatabaseWindow(_informationService, guid, _secretKey, _iv);
+                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv);
                 ErrorMessageVisibility = Visibility.Hidden;
                 _window.Close();
                 

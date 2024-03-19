@@ -6,7 +6,7 @@ namespace PGenerator.Data;
 
 public class AccountStorageContext : DbContext
 {
-    public DbSet<AccountInformation> AccountDetails { get; set; }
+    public DbSet<AccountDetail> AccountDetails { get; set; }
 
     public AccountStorageContext(DbContextOptions<AccountStorageContext> options) : base(options) { }
     

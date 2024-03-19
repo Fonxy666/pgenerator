@@ -4,11 +4,11 @@ using PGenerator.Response;
 
 namespace PGenerator.Service.InformationService;
 
-public interface IInformationService
+public interface IAccountDetailService
 {
-    IList<Database> ListInformation(Guid userId);
-    Task<AccountInformation> GetInformation(Guid infoId);
-    Task<PublicResponse> AddNewInfo(AccountInformation request);
+    IList<AccountDetailShow> ListInformation(Guid userId);
+    Task<AccountDetail> GetInformation(Guid infoId);
+    Task<PublicResponse> AddNewInfo(AccountDetail request);
     Task<PublicResponse> UpdateInfo(UpdateRequest request, Guid infoId);
     Task<PublicResponse> DeleteInfo(Guid infoId);
 }

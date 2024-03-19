@@ -7,9 +7,9 @@ namespace PGenerator.View;
 public partial class DatabaseWindow : Window
 {
     public DatabaseWindow() { }
-    public DatabaseWindow(IInformationService informationService, Guid userId, byte[] secretKey, byte[] iv)
+    public DatabaseWindow(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
     {
         InitializeComponent();
-        DataContext = new DatabaseViewModel(informationService, userId, secretKey, iv);
+        DataContext = new DatabaseViewModel(accountDetailService, userId, secretKey, iv);
     }
 }

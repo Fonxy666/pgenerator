@@ -45,17 +45,17 @@ public partial class App : Application
                 services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<ITokenStorage, TokenStorage>();
-                services.AddScoped<IInformationService, InformationService>(serviceProvider =>
+                services.AddScoped<IAccountDetailService, AccountDetailService>(serviceProvider =>
                 {
                     var storageContext = serviceProvider.GetRequiredService<AccountStorageContext>();
-                    return new InformationService(storageContext, key, iv);
+                    return new AccountDetailService(storageContext, key, iv);
                 });
                 services.AddScoped<LoginWindow>(serviceProvider =>
                 {
                     var userService = serviceProvider.GetRequiredService<IUserService>();
                     var tokenService = serviceProvider.GetRequiredService<ITokenService>();
                     var tokenStorage = serviceProvider.GetRequiredService<ITokenStorage>();
-                    var informationService = serviceProvider.GetRequiredService<IInformationService>();
+                    var informationService = serviceProvider.GetRequiredService<IAccountDetailService>();
                     return new LoginWindow(userService, tokenService, tokenStorage, informationService, key, iv);
                 });
                 services.AddScoped<RegistrationWindow>();

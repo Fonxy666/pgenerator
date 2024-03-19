@@ -6,17 +6,17 @@ using PGenerator.Service.PasswordService;
 
 namespace PGenerator.Service.InformationService;
 
-public class InformationService(AccountStorageContext context, byte[] secretKey, byte[] iv) : IInformationService
+public class AccountDetailService(AccountStorageContext context, byte[] secretKey, byte[] iv) : IAccountDetailService
 {
     private AccountStorageContext Context { get; set; } = context;
-    public IList<Database> ListInformation(Guid userId)
+    public IList<AccountDetailShow> ListInformation(Guid userId)
     {
         var existingList = Context.AccountDetails.Where(information => information.UserId == userId).ToList();
-        var newList = new List<Database>();
+        var newList = new List<AccountDetailShow>();
         for (var i = 0; i < existingList.Count; i++)
         {
             var newPassword = PasswordEncrypt.DecryptStringFromBytes_Aes(existingList[i].Password, secretKey, iv);
-            var newElement = new Database(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
+            var newElement = new AccountDetailShow(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
                 existingList[i].Created);
             newList.Add(newElement);
         }
@@ -24,7 +24,7 @@ public class InformationService(AccountStorageContext context, byte[] secretKey,
         return newList;
     }
 
-    public async Task<AccountInformation> GetInformation(Guid infoId)
+    public async Task<AccountDetail> GetInformation(Guid infoId)
     {
         try
         {
@@ -37,7 +37,7 @@ public class InformationService(AccountStorageContext context, byte[] secretKey,
         }
     }
 
-    public async Task<PublicResponse> AddNewInfo(AccountInformation request)
+    public async Task<PublicResponse> AddNewInfo(AccountDetail request)
     {
         try
         {

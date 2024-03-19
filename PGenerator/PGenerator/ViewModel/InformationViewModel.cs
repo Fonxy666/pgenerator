@@ -13,39 +13,42 @@ namespace PGenerator.ViewModel;
 public class InformationViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
-    private AccountInformation _accountInformation;
-    private IInformationService _informationService;
+    private AccountDetail _accountDetail;
+    private IAccountDetailService _accountDetailService;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
     private readonly bool _updateInfo;
+    private string _password;
+    private RelayCommand _addCommand;
+    private RelayCommand _updateCommand;
+    private RelayCommand _backCommand;
+    private RelayCommand _generatePasswordCommand;
     public InformationViewModel() { }
-    public InformationViewModel(Guid userId, Window window, IInformationService informationService, byte[] secretKey, byte[] iv)
+    public InformationViewModel(Guid userId, Window window, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
     {
         _window = window;
-        _informationService = informationService;
-        _accountInformation = new AccountInformation(userId, string.Empty, string.Empty, Array.Empty<byte>());
+        _accountDetailService = accountDetailService;
+        _accountDetail = new AccountDetail(userId, string.Empty, string.Empty, Array.Empty<byte>());
         _secretKey = secretKey;
         _iv = iv;
         _updateInfo = false;
     }
     
-    public InformationViewModel(AccountInformation accountInformation, Window window, IInformationService informationService, byte[] secretKey, byte[] iv)
+    public InformationViewModel(AccountDetail accountDetail, Window window, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
     {
         _window = window;
-        _informationService = informationService;
-        _accountInformation = accountInformation;
+        _accountDetailService = accountDetailService;
+        _accountDetail = accountDetail;
         _secretKey = secretKey;
         _iv = iv;
         _updateInfo = true;
-        _password = PasswordEncrypt.DecryptStringFromBytes_Aes(accountInformation.Password, secretKey, iv);
+        _password = PasswordEncrypt.DecryptStringFromBytes_Aes(accountDetail.Password, secretKey, iv);
     }
 
     public string AccountButton => _updateInfo ? "Update" : "Add";
 
     public ICommand AccountButtonCommand => _updateInfo ? UpdateCommand : AddCommand;
-
-    private string _password;
-
+    
     public string Password
     {
         get => _password;
@@ -54,17 +57,15 @@ public class InformationViewModel : NotifyPropertyChangedHandler
             _password = value; NotifyPropertyChanged("Password");
         }
     }
-    public AccountInformation AccountInformation
+    public AccountDetail AccountDetail
     {
-        get => _accountInformation;
+        get => _accountDetail;
         set
         {
-            _accountInformation = value; NotifyPropertyChanged("Information");
+            _accountDetail = value; NotifyPropertyChanged("Information");
         }
     }
-
-    private RelayCommand _addCommand;
-
+    
     public ICommand AddCommand
     {
         get
@@ -81,8 +82,8 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     private async void AddMethod()
     {
         var encryptedPassword = PasswordEncrypt.EncryptStringToBytes_Aes(Password, _secretKey, _iv);
-        AccountInformation.Password = encryptedPassword;
-        var result = await _informationService.AddNewInfo(AccountInformation);
+        AccountDetail.Password = encryptedPassword;
+        var result = await _accountDetailService.AddNewInfo(AccountDetail);
         if (result.Success)
         {
             MessageBox.Show("New account successfully added.");
@@ -90,8 +91,6 @@ public class InformationViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private RelayCommand _updateCommand;
-
     public ICommand UpdateCommand
     {
         get
@@ -108,16 +107,15 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     private async void UpdateMethod()
     {
         Console.WriteLine(Password);
-        var request = new UpdateRequest(_accountInformation.Application!, _accountInformation.UserName!, Password);
-        var result = await _informationService.UpdateInfo(request, _accountInformation.Id);
+        var request = new UpdateRequest(_accountDetail.Application!, _accountDetail.UserName!, Password);
+        var result = await _accountDetailService.UpdateInfo(request, _accountDetail.Id);
         if (result.Success)
         {
-            MessageBox.Show($"Account for: {_accountInformation.Application} application successfully updated.");
+            MessageBox.Show($"Account for: {_accountDetail.Application} application successfully updated.");
             _window.Close();
         }
     }
     
-    private RelayCommand _backCommand;
     public ICommand BackCommand
     {
         get
@@ -135,9 +133,7 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     {
         _window.Close();
     }
-
-    private RelayCommand _generatePasswordCommand;
-
+    
     public ICommand GeneratePasswordCommand
     {
         get

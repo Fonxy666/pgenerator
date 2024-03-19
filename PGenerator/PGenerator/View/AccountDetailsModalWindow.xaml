@@ -1,4 +1,4 @@
-﻿<Window x:Class="PGenerator.View.InformationWindow"
+﻿<Window x:Class="PGenerator.View.AccountDetailsModalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,11 +27,11 @@
             
             <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Left" />
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
-                     Text="{ Binding AccountInformation.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{ Binding AccountDetail.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
             <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
             <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
-                     Text="{ Binding AccountInformation.UserName ,Mode=TwoWay}"
+                     Text="{ Binding AccountDetail.UserName ,Mode=TwoWay}"
                      MinWidth="130" VerticalAlignment="Center"/>
             <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
             <TextBox Grid.Row="2" Grid.Column="1" Name="Passwordtxt"  HorizontalAlignment="Left"

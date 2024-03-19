@@ -2,7 +2,7 @@
 
 namespace PGenerator.Model;
 
-public class AccountInformation(Guid userId, string? application, string? userName, byte[] password)
+public class AccountDetail(Guid userId, string? application, string? userName, byte[] password)
 {
     [Key]
     public Guid Id { get; set; }
