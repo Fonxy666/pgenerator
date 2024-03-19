@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PGenerator.Model;
 using PGenerator.Service.AuthService;
+using PGenerator.Service.InformationService;
 using PGenerator.Service.UserManager;
 using PGenerator.TokenStorageFolder;
 using PGenerator.View;
@@ -31,6 +34,8 @@ public partial class App : Application
         var connectionString = configuration["ConnectionString"];
         var issueAudience = configuration["IssueAudience"];
         var issueSign = configuration["IssueSign"];
+        var key = GetKey();
+        var iv = GetIV();
         
         var dataProtectionProvider = DataProtectionProvider.Create("YourApplicationName");
         
@@ -40,8 +45,21 @@ public partial class App : Application
                 services.AddScoped<ITokenService, TokenService>();
                 services.AddScoped<IUserService, UserService>();
                 services.AddScoped<ITokenStorage, TokenStorage>();
-                services.AddScoped<LoginWindow>();
+                services.AddScoped<IInformationService, InformationService>(serviceProvider =>
+                {
+                    var storageContext = serviceProvider.GetRequiredService<StorageContext>();
+                    return new InformationService(storageContext, key, iv);
+                });
+                services.AddScoped<LoginWindow>(serviceProvider =>
+                {
+                    var userService = serviceProvider.GetRequiredService<IUserService>();
+                    var tokenService = serviceProvider.GetRequiredService<ITokenService>();
+                    var tokenStorage = serviceProvider.GetRequiredService<ITokenStorage>();
+                    var informationService = serviceProvider.GetRequiredService<IInformationService>();
+                    return new LoginWindow(userService, tokenService, tokenStorage, informationService, key, iv);
+                });
                 services.AddScoped<RegistrationWindow>();
+                services.AddScoped<DatabaseWindow>();
                 services.AddSingleton<IConfiguration>(configuration);
                 services.AddSingleton<IDataProtectionProvider>(dataProtectionProvider);
                 services.AddDbContext<UsersContext>(options =>
@@ -103,13 +121,11 @@ public partial class App : Application
     {
         await AppHost!.StartAsync();
         var serviceProvider = AppHost.Services;
-
+        
         var loginWindow = serviceProvider.GetService<LoginWindow>();
-        loginWindow!.TokenService = serviceProvider.GetService<ITokenService>()!;
-        loginWindow!.UserService = serviceProvider.GetService<IUserService>()!;
-
         MainWindow = loginWindow;
-        loginWindow.Show();
+        loginWindow!.Show();
+
         base.OnStartup(e);
     }
 
@@ -117,5 +133,55 @@ public partial class App : Application
     {
         await AppHost!.StopAsync();
         base.OnExit(e);
+    }
+    
+    private static byte[] GenerateKey()
+    {
+        using (var aes = Aes.Create())
+        {
+            aes.GenerateKey();
+            return aes.Key;
+        }
+    }
+
+    private static byte[] GenerateIV()
+    {
+        using (var aes = Aes.Create())
+        {
+            aes.GenerateIV();
+            return aes.IV;
+        }
+    }
+    
+    private static byte[] GetKey()
+    {
+        const string filePath = "key.bin";
+
+        if (File.Exists(filePath))
+        {
+            return File.ReadAllBytes(filePath);
+        }
+        else
+        {
+            var key = GenerateKey();
+            File.WriteAllBytes(filePath, key);
+            return key;
+        }
+    }
+
+    private static byte[] GetIV()
+    {
+        const string filePath = "iv.bin";
+
+        if (File.Exists(filePath))
+        {
+            return File.ReadAllBytes(filePath);
+        }
+        else
+        {
+            var iv = GenerateIV();
+            File.WriteAllBytes(filePath, iv);
+            return iv;
+        }
     }
 }

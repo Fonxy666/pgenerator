@@ -3,6 +3,7 @@ using System.Windows.Input;
 using PGenerator.ICommandUpdater;
 using PGenerator.Request;
 using PGenerator.Service.AuthService;
+using PGenerator.Service.InformationService;
 using PGenerator.Service.UserManager;
 using PGenerator.TokenStorageFolder;
 using PGenerator.View;
@@ -15,40 +16,32 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
     private readonly ITokenStorage _tokenStorage;
+    private readonly IInformationService _informationService;
+    private readonly byte[] _secretKey;
+    private readonly byte[] _iv;
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService, byte[] secretKey, byte[] iv)
     {
         _window = window;
         _userService = userService;
         _tokenService = tokenService;
         _tokenStorage = tokenStorage;
+        _informationService = informationService;
+        _secretKey = secretKey;
+        _iv = iv;
+        _loginRequest = new LoginRequest(string.Empty, string.Empty);
     }
-    
-    private string _userName;
 
-    public string UserName
+    private LoginRequest _loginRequest;
+    public LoginRequest LoginRequest
     {
-        get => _userName; 
+        get => _loginRequest; 
         set
         {
-            if (_userName != value)
+            if (_loginRequest != value)
             {
-                _userName = value;
-            }
-        }
-    }
-    
-    private string _password;
-
-    public string Password
-    {
-        get => _password; 
-        set
-        {
-            if (_password != value)
-            {
-                _password = value;
+                _loginRequest = value;
             }
         }
     }
@@ -111,14 +104,20 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
     private async void Login()
     {
-        var request = new LoginRequest(UserName, Password);
-        var result = await _userService.Login(request);
+        var result = await _userService.Login(LoginRequest);
         if (result.Success)
         {
             var jwtToken = _tokenService.CreateJwtToken(result.User!, "User");
             await _tokenStorage.SaveTokenAsync(jwtToken);
-            await _tokenStorage.ReadTokenAsync();
-            ErrorMessageVisibility = Visibility.Hidden;
+
+            if (Guid.TryParse(result.User!.Id, out var guid))
+            {
+                var databaseWindow = new DatabaseWindow(_informationService, guid, _secretKey, _iv);
+                ErrorMessageVisibility = Visibility.Hidden;
+                _window.Close();
+                
+                databaseWindow.ShowDialog();
+            }
         }
         else
         {

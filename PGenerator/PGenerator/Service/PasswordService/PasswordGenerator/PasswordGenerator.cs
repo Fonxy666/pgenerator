@@ -1,4 +1,4 @@
-﻿namespace PGenerator.Service.PasswordGenerator;
+﻿namespace PGenerator.Service.PasswordService.PasswordGenerator;
 
 public static class PasswordGenerator
 {
