@@ -13,10 +13,10 @@ public partial class InformationWindow : Window
         DataContext = new InformationViewModel(userId, this, informationService, secretKey, iv);
     }
 
-    public InformationWindow(Information information, IInformationService informationService, byte[] secretKey,
+    public InformationWindow(AccountInformation accountInformation, IInformationService informationService, byte[] secretKey,
         byte[] iv)
     {
         InitializeComponent();
-        DataContext = new InformationViewModel(information, this, informationService, secretKey, iv);
+        DataContext = new InformationViewModel(accountInformation, this, informationService, secretKey, iv);
     }
 }

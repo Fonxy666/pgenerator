@@ -27,11 +27,11 @@
             
             <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Left" />
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
-                     Text="{ Binding Information.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Text="{ Binding AccountInformation.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
             <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Left" Width="103" />
             <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
-                     Text="{ Binding Information.UserName ,Mode=TwoWay}"
+                     Text="{ Binding AccountInformation.UserName ,Mode=TwoWay}"
                      MinWidth="130" VerticalAlignment="Center"/>
             <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" />
             <TextBox Grid.Row="2" Grid.Column="1" Name="Passwordtxt"  HorizontalAlignment="Left"

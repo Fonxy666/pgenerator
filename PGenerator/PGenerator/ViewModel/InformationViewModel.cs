@@ -13,7 +13,7 @@ namespace PGenerator.ViewModel;
 public class InformationViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
-    private Information _information;
+    private AccountInformation _accountInformation;
     private IInformationService _informationService;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
@@ -23,21 +23,21 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     {
         _window = window;
         _informationService = informationService;
-        _information = new Information(userId, string.Empty, string.Empty, Array.Empty<byte>());
+        _accountInformation = new AccountInformation(userId, string.Empty, string.Empty, Array.Empty<byte>());
         _secretKey = secretKey;
         _iv = iv;
         _updateInfo = false;
     }
     
-    public InformationViewModel(Information information, Window window, IInformationService informationService, byte[] secretKey, byte[] iv)
+    public InformationViewModel(AccountInformation accountInformation, Window window, IInformationService informationService, byte[] secretKey, byte[] iv)
     {
         _window = window;
         _informationService = informationService;
-        _information = information;
+        _accountInformation = accountInformation;
         _secretKey = secretKey;
         _iv = iv;
         _updateInfo = true;
-        _password = PasswordEncrypt.DecryptStringFromBytes_Aes(information.Password, secretKey, iv);
+        _password = PasswordEncrypt.DecryptStringFromBytes_Aes(accountInformation.Password, secretKey, iv);
     }
 
     public string AccountButton => _updateInfo ? "Update" : "Add";
@@ -54,12 +54,12 @@ public class InformationViewModel : NotifyPropertyChangedHandler
             _password = value; NotifyPropertyChanged("Password");
         }
     }
-    public Information Information
+    public AccountInformation AccountInformation
     {
-        get => _information;
+        get => _accountInformation;
         set
         {
-            _information = value; NotifyPropertyChanged("Information");
+            _accountInformation = value; NotifyPropertyChanged("Information");
         }
     }
 
@@ -81,8 +81,8 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     private async void AddMethod()
     {
         var encryptedPassword = PasswordEncrypt.EncryptStringToBytes_Aes(Password, _secretKey, _iv);
-        Information.Password = encryptedPassword;
-        var result = await _informationService.AddNewInfo(Information);
+        AccountInformation.Password = encryptedPassword;
+        var result = await _informationService.AddNewInfo(AccountInformation);
         if (result.Success)
         {
             MessageBox.Show("New account successfully added.");
@@ -108,11 +108,11 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     private async void UpdateMethod()
     {
         Console.WriteLine(Password);
-        var request = new UpdateRequest(_information.Application!, _information.UserName!, Password);
-        var result = await _informationService.UpdateInfo(request, _information.Id);
+        var request = new UpdateRequest(_accountInformation.Application!, _accountInformation.UserName!, Password);
+        var result = await _informationService.UpdateInfo(request, _accountInformation.Id);
         if (result.Success)
         {
-            MessageBox.Show($"Account for: {_information.Application} application successfully updated.");
+            MessageBox.Show($"Account for: {_accountInformation.Application} application successfully updated.");
             _window.Close();
         }
     }

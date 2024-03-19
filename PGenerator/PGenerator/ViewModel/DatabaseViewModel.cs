@@ -97,7 +97,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void UpdateInfo()
     {
-        var newInfo = new Information(_userId, SelectedInformation.Application, SelectedInformation.Username, PasswordEncrypt.EncryptStringToBytes_Aes(SelectedInformation.Password, _secretKey, _iv))
+        var newInfo = new AccountInformation(_userId, SelectedInformation.Application, SelectedInformation.Username, PasswordEncrypt.EncryptStringToBytes_Aes(SelectedInformation.Password, _secretKey, _iv))
         {
             Id = SelectedInformation.InfoId
         };

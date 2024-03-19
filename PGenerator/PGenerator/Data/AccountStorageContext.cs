@@ -4,13 +4,13 @@ using PGenerator.Model;
 
 namespace PGenerator.Data;
 
-public class StorageContext : DbContext
+public class AccountStorageContext : DbContext
 {
-    public DbSet<Information> Information { get; set; }
+    public DbSet<AccountInformation> AccountDetails { get; set; }
 
-    public StorageContext(DbContextOptions<StorageContext> options) : base(options) { }
+    public AccountStorageContext(DbContextOptions<AccountStorageContext> options) : base(options) { }
     
-    public StorageContext() { }
+    public AccountStorageContext() { }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -47,7 +47,7 @@ public partial class App : Application
                 services.AddScoped<ITokenStorage, TokenStorage>();
                 services.AddScoped<IInformationService, InformationService>(serviceProvider =>
                 {
-                    var storageContext = serviceProvider.GetRequiredService<StorageContext>();
+                    var storageContext = serviceProvider.GetRequiredService<AccountStorageContext>();
                     return new InformationService(storageContext, key, iv);
                 });
                 services.AddScoped<LoginWindow>(serviceProvider =>
@@ -64,7 +64,7 @@ public partial class App : Application
                 services.AddSingleton<IDataProtectionProvider>(dataProtectionProvider);
                 services.AddDbContext<UsersContext>(options =>
                     options.UseSqlServer(connectionString));
-                services.AddDbContext<StorageContext>(options =>
+                services.AddDbContext<AccountStorageContext>(options =>
                     options.UseSqlServer(connectionString));
                 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -98,14 +98,19 @@ public partial class App : Application
                     })
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<UsersContext>();
-                SeedRoles(services.BuildServiceProvider()).Wait();
+                SeedRoles(services.BuildServiceProvider(), configuration).Wait();
             })
             .Build();
     }
     
-    private static async Task SeedRoles(IServiceProvider serviceProvider)
+    private static async Task SeedRoles(IServiceProvider serviceProvider, IConfiguration configuration)
     {
+        var adminEmail = configuration["AdminEmail"];
+        var adminUserName = configuration["AdminUsername"];
+        var adminPassword = configuration["AdminPassword"];
+        
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = serviceProvider.GetRequiredService<UserManager<UserInformation>>();
 
         if (!await roleManager.RoleExistsAsync("Admin"))
         {
@@ -114,6 +119,18 @@ public partial class App : Application
         if (!await roleManager.RoleExistsAsync("User"))
         {
             await roleManager.CreateAsync(new IdentityRole("User"));
+        }
+
+        var adminUser = await userManager.FindByEmailAsync(adminEmail!);
+        if (adminUser == null)
+        {
+            adminUser = new UserInformation { UserName = adminUserName!, Email = adminEmail };
+            var result = await userManager.CreateAsync(adminUser, adminPassword!);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
         }
     }
 
