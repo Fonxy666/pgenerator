@@ -4,16 +4,123 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="DatabaseWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
-    
+        Title="DatabaseWindow" Height="720" Width="1080"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <Style x:Key="TopButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#6e7783"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="50">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#dcdcdc"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#d0c0ff"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="15 3"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7b5cd6"></Setter>
+                    <Setter Property="Foreground" Value="#ffffff"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="MenuButtonIcon" TargetType="Icon:PackIconMaterial">
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20 2 20 0"/>
+        </Style>
+        
+    </Window.Resources>
     <Window.DataContext>
         <viewModel:DatabaseViewModel />
     </Window.DataContext>
     
-    <Grid>
-        
+    <Border Background="#eff2f7" CornerRadius="30" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Margin="20 28 0 35" Style="{StaticResource TopButton}">
+                <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
+            </Button>
+            <Border Grid.Row="1" Background="#623ed0" CornerRadius="0 50 0 30">
+                <DockPanel>
+                    <Border Width="100" Height="100" Padding="3" Background="White" CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20  -30 0 0" >
+                        <Ellipse>
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="../Images/robot_image.jpg"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Border>
+                    <TextBlock Text="Glad you are here" Foreground="White" FontSize="22" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center" Margin="5 25 0 10"></TextBlock>
+                    <TextBlock Text="You can add passwords," Foreground="#d0bfff" FontSize="12" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"></TextBlock>
+                    <TextBlock Text="we are storing everything securely." Foreground="#d0bfff" FontSize="12" FontWeight="SemiBold" DockPanel.Dock="Top" TextAlignment="Center"></TextBlock>
+                    
+                    <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"></Separator>
+                    
+                    <StackPanel DockPanel.Dock="Top">
+                        <Button Style="{StaticResource MenuButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <Icon:PackIconMaterial/>
+                                <TextBlock Text="DashBoard"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    
+                    <Button Style="{StaticResource MenuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0">
+                        <StackPanel Orientation="Horizontal">
+                            <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource MenuButtonIcon}"></Icon:PackIconMaterial>
+                            <TextBlock Text="Logout"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Border>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -61,5 +168,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-    </Grid>
+    </Grid>-->
 </Window>

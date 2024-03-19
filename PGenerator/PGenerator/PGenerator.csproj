@@ -11,6 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.17" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.17" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.17">
@@ -32,6 +33,15 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Images\robot_image.jpg" />
+      <Resource Include="Images\robot_image.jpg" />
     </ItemGroup>
 
 </Project>

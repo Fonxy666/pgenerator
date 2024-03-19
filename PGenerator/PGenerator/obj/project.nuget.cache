@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "V+lFmBajFN4WPPirTcd7UfcywSzja5fS24pcIp0OIjFZwO1V67vIvgNxayCOx4LJtXCDLuDvFGP1dmOGK8lxoQ==",
+  "dgSpecHash": "fdtVizx04qb37IrAVmsV3fi1kETL+TXR5THzUr4J8uGzsBGZekrs+OGS1hR7rBcmeR9ffqAt482GYhCNExO5Nw==",
   "success": true,
   "projectFilePath": "D:\\after codecool\\pgenerator\\PGenerator\\PGenerator\\PGenerator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vikto\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\vikto\\.nuget\\packages\\mahapps.metro.iconpacks.material\\4.11.0\\mahapps.metro.iconpacks.material.4.11.0.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.17\\microsoft.aspnetcore.authentication.jwtbearer.7.0.17.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.17\\microsoft.aspnetcore.cryptography.internal.7.0.17.nupkg.sha512",
     "C:\\Users\\vikto\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.17\\microsoft.aspnetcore.cryptography.keyderivation.7.0.17.nupkg.sha512",

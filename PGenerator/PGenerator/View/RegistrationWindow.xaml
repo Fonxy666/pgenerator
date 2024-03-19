@@ -27,25 +27,25 @@
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Right"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="Email:"  HorizontalAlignment="Right" Margin="10,10,10,10"/>
             <TextBox Grid.Row="0" Grid.Column="1" x:Name="Emailtxt"
                      Text="{ Binding RegistrationRequest.Email ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label Grid.Row="1" Grid.Column="0" Content="Username:"  HorizontalAlignment="Right"/>
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" Margin="10,10,10,10"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Username:"  HorizontalAlignment="Right" Margin="10,10,10,10"/>
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="Usernametxt"
                      Text="{ Binding RegistrationRequest.UserName ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label  Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Right"/>
+                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" Margin="10,10,10,10"/>
+            <Label  Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Right" Margin="10,10,10,10"/>
             <TextBox Grid.Row="2" Grid.Column="1"  Name="Passwordtxt"  HorizontalAlignment="Left" 
                      Text="{Binding Password}"
-                     MinWidth="130" VerticalAlignment="Center"/>
-            <Label  Grid.Row="3" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Right"/>
+                     MinWidth="130" VerticalAlignment="Center" Margin="10,10,10,10"/>
+            <Label  Grid.Row="3" Grid.Column="0"  Content="RepeatPassword:" HorizontalAlignment="Right" Margin="10,10,10,10"/>
             <TextBox Grid.Row="3" Grid.Column="1"  Name="RepeatPasswordtxt"  HorizontalAlignment="Left"
                      Text="{Binding PasswordRepeat}"
-                     MinWidth="130" VerticalAlignment="Center"/>
+                     MinWidth="130" VerticalAlignment="Center" Margin="10,10,10,10"/>
             <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Width="400" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}" TextWrapping="Wrap"/>
-            <Button Grid.Row="5" Grid.Column="0" Content="Register" HorizontalAlignment="Right" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding RegistrationCommand}"/>
-            <Button Grid.Row="5" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="2,5,0,5" Height="20" Width="60" Command="{Binding BackCommand}"/>
+            <Button Grid.Row="5" Grid.Column="0" Content="Register" HorizontalAlignment="Right" Margin="20,20,20,20" Height="20" Width="60" Command="{Binding RegistrationCommand}"/>
+            <Button Grid.Row="5" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="20,20,20,20" Height="20" Width="60" Command="{Binding BackCommand}"/>
         </Grid>
     </Grid>
 </Window>
