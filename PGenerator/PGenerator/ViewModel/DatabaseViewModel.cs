@@ -19,8 +19,9 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private ICommand _deleteCommand;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
-    private IList<AccountDetailShow> _information;
+    private IList<AccountDetailShow> _accountDetail;
     private AccountDetailShow _selectedInformation;
+    private string _accountDetailCount;
 
     public DatabaseViewModel() { }
     public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
@@ -30,17 +31,18 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         _secretKey = secretKey;
         _iv = iv;
         SelectedInformation = new AccountDetailShow(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, DateTime.Now);
-        Information = new List<AccountDetailShow>();
+        AccountDetail = new List<AccountDetailShow>();
+        _accountDetailCount = $"{AccountDetail.Count} added accounts.";
         FetchData();
     }
     
-    public IList<AccountDetailShow> Information
+    public IList<AccountDetailShow> AccountDetail
     {
-        get => _information;
+        get => _accountDetail;
         set
         {
-            _information = value;
-            NotifyPropertyChanged("Information");
+            _accountDetail = value;
+            NotifyPropertyChanged("AccountDetail");
         }
     }
     
@@ -56,8 +58,10 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void FetchData()
     {
-        Information = _accountDetailService.ListInformation(_userId);
-        NotifyPropertyChanged(nameof(Information));
+        AccountDetail = _accountDetailService.ListInformation(_userId);
+        _accountDetailCount = $"{AccountDetail.Count} added accounts.";
+        AccountDetailCount = _accountDetailCount;
+        NotifyPropertyChanged(nameof(AccountDetail));
     }
     
     public ICommand AddCommand
@@ -124,6 +128,15 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         {
             MessageBox.Show($"Info for application: {SelectedInformation.Application} got deleted successfully.");
             FetchData();
+        }
+    }
+    
+    public string AccountDetailCount
+    {
+        get => _accountDetailCount;
+        set
+        {
+            _accountDetailCount = value; NotifyPropertyChanged("AccountDetailCount");
         }
     }
 }
