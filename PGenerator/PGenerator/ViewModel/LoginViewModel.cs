@@ -20,10 +20,11 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
     private LoginRequest _loginRequest;
-    private RelayCommand _showRegisterModal;
-    private RelayCommand _loginCommand;
+    private ICommand _showRegisterModal;
+    private ICommand _loginCommand;
     private string _errorMessage;
     private Visibility _errorMessageVisibility = Visibility.Collapsed;
+    private ICommand _closeApplication;
     public LoginViewModel() { }
 
     public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
@@ -121,5 +122,24 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             ErrorMessage = result.Message!;
             ErrorMessageVisibility = Visibility.Visible;
         }
+    }
+    
+    
+    public ICommand CloseApplication
+    {
+        get
+        {
+            if (_closeApplication == null)
+            {
+                _closeApplication = new RelayCommand(param => CloseApp(), null);
+            }
+
+            return _closeApplication;
+        }
+    }
+
+    private void CloseApp()
+    {
+        _window.Close();
     }
 }

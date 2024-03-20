@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using PGenerator.Service.AuthService;
 using PGenerator.Service.InformationService;
 using PGenerator.Service.UserManager;

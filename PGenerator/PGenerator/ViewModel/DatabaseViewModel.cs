@@ -22,6 +22,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private IList<AccountDetailShow> _accountDetail;
     private AccountDetailShow _selectedInformation;
     private string _accountDetailCount;
+    private ICommand _closeApplication;
 
     public DatabaseViewModel() { }
     public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
