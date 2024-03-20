@@ -4,42 +4,197 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="InformationWindow" Height="300" Width="450">
+        Title="Information window" Height="350" Width="500"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
     
     <Window.DataContext>
         <viewModel:InformationViewModel />
     </Window.DataContext>
     
-    <Grid>
-        <Grid ShowGridLines="False" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Label Grid.Row="0" Grid.Column="0" Content="Application:"  HorizontalAlignment="Right" Margin="0,5,5,5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Applicationtxt"
-                     Text="{ Binding AccountDetail.Application ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
-            <Label Grid.Row="1" Grid.Column="0"  Content="Username:" HorizontalAlignment="Right" Margin="0,5,5,5"/>
-            <TextBox Grid.Row="1" Grid.Column="1"  Name="Usernametxt"  HorizontalAlignment="Left"
-                     Text="{ Binding AccountDetail.UserName ,Mode=TwoWay}"
-                     MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
-            <Label Grid.Row="2" Grid.Column="0"  Content="Password:" HorizontalAlignment="Right"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Name="Passwordtxt"  HorizontalAlignment="Left"
-                     Text="{ Binding Password ,Mode=TwoWay}"
-                     MinWidth="130" VerticalAlignment="Center" Margin="0,5,5,5"/>
-            <Button Content="Generate password" Grid.Row="2" Grid.Column="2" Height="18" Command="{Binding GeneratePasswordCommand}" Margin="5,5,5,5" Padding="20,0,20,0"/>
-            <Button Grid.Row="3" Grid.Column="0" Content="{Binding AccountButton}" Command="{Binding AccountButtonCommand}" Margin="0,50,5,5" VerticalAlignment="Center"/>
-            <Button Grid.Row="3" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" Margin="0,50,5,5" Width="80" VerticalAlignment="Center"/>
+    <Window.Resources>
+        
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="15 10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBoxBase">
+                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                                BorderThickness="1" BorderBrush="#e0e6ed">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="Button" TargetType="Button">
+            <Setter Property="Background" Value="#6741d9"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 20 0 0 "/>
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7b5cd6"></Setter>
+                    <Setter Property="Foreground" Value="#ffffff"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+    
+    <Border CornerRadius="30">
+        
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="#6741d9"/>
+                <GradientStop Offset="0.1" Color="#6741d9"/>
+                <GradientStop Offset="0.9" Color="white"/>
+                <GradientStop Offset="1" Color="white"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
+        <Grid>
+            <Grid ShowGridLines="False" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBox Grid.Row="0" Name="Applicationtxt" Text="{Binding AccountDetail.Application,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Width="200">
+                    <TextBox.Triggers>
+                        <EventTrigger RoutedEvent="GotFocus">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ApplicationPlaceholdertxt" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </TextBox.Triggers>
+                </TextBox>
+                <Grid Grid.Row="0" Name="ApplicationPlaceholdertxt" Width="200">
+                    <iconPacks:PackIconMaterial Kind="Application" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
+                    <Label Content="Application..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
+                </Grid>
+                
+                <TextBox Grid.Row="1" Name="Usernametxt" Text="{Binding AccountDetail.UserName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Width="200">
+                    <TextBox.Triggers>
+                        <EventTrigger RoutedEvent="GotFocus">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UsernamePlaceholdertxt" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </TextBox.Triggers>
+                </TextBox>
+                <Grid Grid.Row="1" Name="UsernamePlaceholdertxt" Width="200">
+                    <iconPacks:PackIconMaterial Kind="NaturePeople" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
+                    <Label Content="Username..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
+                </Grid>
+                
+                <Grid Grid.Row="2">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBox Grid.Row="0" Grid.Column="0" Name="Passwordtxt" Text="{Binding AccountDetail.Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Width="200">
+                        <TextBox.Triggers>
+                            <EventTrigger RoutedEvent="GotFocus">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PasswordPlaceholdertxt" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </TextBox.Triggers>
+                    </TextBox>
+                    <Grid Grid.Row="0" Grid.Column="0" Name="PasswordPlaceholdertxt" Width="200">
+                        <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
+                        <Label Content="Application..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
+                    </Grid>
+                
+                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource Button}" Command="{Binding GeneratePasswordCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                            <TextBlock Text="Generate password"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    
+                </Grid>
+                
+                <Grid Grid.Row="3">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource Button}" Command="{Binding AccountButtonCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                            <TextBlock Text="{Binding AccountButton}"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource Button}" Command="{Binding BackCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="BackupRestore" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                            <TextBlock Text="Back"></TextBlock>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

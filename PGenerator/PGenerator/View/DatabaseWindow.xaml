@@ -554,7 +554,7 @@
                 <TextBlock Text="Welcome" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" HorizontalAlignment="Left"
                            Foreground="#121518"/>
                 
-                <Button Grid.Row="1" Style="{StaticResource AddButton}" Command="{Binding AddCommand}">
+                <Button Grid.Row="0" Style="{StaticResource AddButton}" Command="{Binding AddCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                         <TextBlock Text="Add New Member"></TextBlock>
