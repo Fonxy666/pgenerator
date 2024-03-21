@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using PGenerator.Service.AuthService;
-using PGenerator.Service.InformationService;
-using PGenerator.Service.UserManager;
-using PGenerator.TokenStorageFolder;
+using PGenerator.Data.TokenStorageFolder;
+using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.AuthService;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.ViewModel;
 
 namespace PGenerator.View

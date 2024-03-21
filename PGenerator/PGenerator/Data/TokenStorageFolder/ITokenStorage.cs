@@ -1,4 +1,4 @@
-﻿namespace PGenerator.TokenStorageFolder;
+﻿namespace PGenerator.Data.TokenStorageFolder;
 
 public interface ITokenStorage
 {

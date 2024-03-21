@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using PGenerator.ICommandUpdater;
-using PGenerator.Request;
-using PGenerator.Service.UserManager;
+using PGenerator.CommandUpdater;
+using PGenerator.Model.Request;
+using PGenerator.Model.Service.UserManager;
 
 namespace PGenerator.ViewModel;
 

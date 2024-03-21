@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using PGenerator.Service.UserManager;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.ViewModel;
 
 namespace PGenerator.View;

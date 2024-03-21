@@ -1,10 +1,9 @@
 ﻿using PGenerator.Data;
-using PGenerator.Model;
-using PGenerator.Request;
-using PGenerator.Response;
-using PGenerator.Service.PasswordService;
+using PGenerator.Model.Request;
+using PGenerator.Model.Response;
+using PGenerator.Model.Service.PasswordService;
 
-namespace PGenerator.Service.InformationService;
+namespace PGenerator.Model.Service.AccountDetailService;
 
 public class AccountDetailService(AccountStorageContext context, byte[] secretKey, byte[] iv) : IAccountDetailService
 {

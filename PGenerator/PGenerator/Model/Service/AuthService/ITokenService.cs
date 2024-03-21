@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PGenerator.Model;
 
-namespace PGenerator.Service.AuthService;
+namespace PGenerator.Model.Service.AuthService;
 
 public interface ITokenService
 {

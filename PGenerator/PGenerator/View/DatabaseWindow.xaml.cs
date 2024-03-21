@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using PGenerator.Service.InformationService;
+using PGenerator.Model.Service.AccountDetailService;
 using PGenerator.ViewModel;
 
 namespace PGenerator.View;

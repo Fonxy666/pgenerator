@@ -1,11 +1,9 @@
 ﻿using System.Windows.Forms;
 using System.Windows.Input;
-using PGenerator.ICommandUpdater;
+using PGenerator.CommandUpdater;
 using PGenerator.Model;
-using PGenerator.Request;
-using PGenerator.Response;
-using PGenerator.Service.InformationService;
-using PGenerator.Service.PasswordService;
+using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.PasswordService;
 using PGenerator.View;
 
 namespace PGenerator.ViewModel;

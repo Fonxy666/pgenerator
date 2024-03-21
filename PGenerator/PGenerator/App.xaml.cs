@@ -11,11 +11,11 @@ using PGenerator.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using PGenerator.Data.TokenStorageFolder;
 using PGenerator.Model;
-using PGenerator.Service.AuthService;
-using PGenerator.Service.InformationService;
-using PGenerator.Service.UserManager;
-using PGenerator.TokenStorageFolder;
+using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.AuthService;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.View;
 using StartupEventArgs = System.Windows.StartupEventArgs;
 

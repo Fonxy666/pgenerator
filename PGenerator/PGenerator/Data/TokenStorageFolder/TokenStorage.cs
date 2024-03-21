@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using System.IO;
+﻿using System.IO;
+using Microsoft.AspNetCore.DataProtection;
 
-namespace PGenerator.TokenStorageFolder
+namespace PGenerator.Data.TokenStorageFolder
 {
     public class TokenStorage : ITokenStorage
     {

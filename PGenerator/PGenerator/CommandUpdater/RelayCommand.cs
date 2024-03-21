@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace PGenerator.ICommandUpdater;
+namespace PGenerator.CommandUpdater;
 
 public class RelayCommand : ICommand
 {
