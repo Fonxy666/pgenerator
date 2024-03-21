@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Information window" Height="350" Width="500"
         WindowStartupLocation="CenterScreen"
@@ -51,11 +52,11 @@
             <Setter Property="Foreground" Value="#ffffff"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Height" Value="35"/>
-            <Setter Property="Width" Value="150"/>
+            <Setter Property="Width" Value="100"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0 20 0 0 "/>
+            <Setter Property="Margin" Value="25 20 25 0 "/>
             <Setter Property="Grid.Row" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -73,6 +74,33 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <Style x:Key="RefreshButton" TargetType="Button">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#6741d9"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Height" Value="14"/>
+                    <Setter Property="Width" Value="14"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="160 0 0 0 "/>
+                    <Setter Property="Grid.Row" Value="1"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#7b5cd6"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
         
     </Window.Resources>
     
@@ -136,41 +164,31 @@
                     <Label Content="Username..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
                 </Grid>
                 
-                <Grid Grid.Row="2">
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TextBox Grid.Row="0" Grid.Column="0" Name="Passwordtxt" Text="{Binding AccountDetail.Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Width="200">
-                        <TextBox.Triggers>
-                            <EventTrigger RoutedEvent="GotFocus">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PasswordPlaceholdertxt" Storyboard.TargetProperty="Visibility">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                        </TextBox.Triggers>
-                    </TextBox>
-                    <Grid Grid.Row="0" Grid.Column="0" Name="PasswordPlaceholdertxt" Width="200">
-                        <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
-                        <Label Content="Application..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
-                    </Grid>
-                
-                    <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource Button}" Command="{Binding GeneratePasswordCommand}">
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
-                            <TextBlock Text="Generate password"></TextBlock>
-                        </StackPanel>
-                    </Button>
-                    
+                <TextBox Grid.Row="2" Name="Passwordtxt" Text="{Binding Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource InputStyle}" Width="200">
+                    <TextBox.Triggers>
+                        <EventTrigger RoutedEvent="GotFocus">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PasswordPlaceholdertxt" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </TextBox.Triggers>
+                </TextBox>
+                <Grid Grid.Row="2" Name="PasswordPlaceholdertxt" Width="200" Visibility="{Binding IsPasswordEmpty, Mode=OneWay}">
+                    <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
+                    <Label Content="Password..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
                 </Grid>
+            
+                <Button Grid.Row="2" Style="{StaticResource RefreshButton}" Command="{Binding GeneratePasswordCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Refresh" Foreground="#6741d9" VerticalAlignment="Center" HorizontalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                    </StackPanel>
+                </Button>
                 
                 <Grid Grid.Row="3">
                     

@@ -23,6 +23,8 @@ public class InformationViewModel : NotifyPropertyChangedHandler
     private RelayCommand _updateCommand;
     private RelayCommand _backCommand;
     private RelayCommand _generatePasswordCommand;
+    private string _isEmptyPassword;
+    
     public InformationViewModel() { }
     public InformationViewModel(Guid userId, Window window, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
     {
@@ -32,6 +34,7 @@ public class InformationViewModel : NotifyPropertyChangedHandler
         _secretKey = secretKey;
         _iv = iv;
         _updateInfo = false;
+        _isEmptyPassword = "Visible";
     }
     
     public InformationViewModel(AccountDetail accountDetail, Window window, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
@@ -43,6 +46,7 @@ public class InformationViewModel : NotifyPropertyChangedHandler
         _iv = iv;
         _updateInfo = true;
         _password = PasswordEncrypt.DecryptStringFromBytes_Aes(accountDetail.Password, secretKey, iv);
+        _isEmptyPassword = "Hidden";
     }
 
     public string AccountButton => _updateInfo ? "Update" : "Add";
@@ -145,6 +149,29 @@ public class InformationViewModel : NotifyPropertyChangedHandler
 
             return _generatePasswordCommand;
         }
+    }
+
+    public string IsPasswordEmpty
+    {
+        get => _isEmptyPassword;
+        set
+        {
+            _isEmptyPassword = value; PasswordChanged();
+        }
+    }
+
+    private void PasswordChanged()
+    {
+        if (Password == string.Empty)
+        {
+            _isEmptyPassword = "Visible";
+        }
+        else
+        {
+            _isEmptyPassword = "Hidden";
+        }
+
+        NotifyPropertyChanged(nameof(IsPasswordEmpty));
     }
 
     private void GeneratePasswordMethod()
