@@ -120,6 +120,31 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="#6741d9"/>
         </Style>
+        
+        <Style x:Key="ShowPasswordButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="150 0 0 0 "/>
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#7b5cd6"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
     </Window.Resources>
     
@@ -195,6 +220,12 @@
                             </TextBlock>
                         </StackPanel>
                     </TextBlock>
+                    
+                    <Button Grid.Row="2" Style="{StaticResource ShowPasswordButton}" Command="{Binding ChangePasswordVisibilityCommand}" Click="ShowPasswordButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Eye" Foreground="#6741d9" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20" Margin="0 1 8 0"/>
+                        </StackPanel>
+                    </Button>
                     
                     <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}"
                                TextWrapping="Wrap" />

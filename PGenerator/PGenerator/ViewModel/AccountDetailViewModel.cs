@@ -18,10 +18,10 @@ public class AccountDetailViewModel : NotifyPropertyChangedHandler
     private readonly byte[] _iv;
     private readonly bool _updateInfo;
     private string _password;
-    private RelayCommand _addCommand;
-    private RelayCommand _updateCommand;
-    private RelayCommand _backCommand;
-    private RelayCommand _generatePasswordCommand;
+    private ICommand _addCommand;
+    private ICommand _updateCommand;
+    private ICommand _backCommand;
+    private ICommand _generatePasswordCommand;
     
     public AccountDetailViewModel() { }
     public AccountDetailViewModel(Guid userId, Window window, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)

@@ -11,6 +11,7 @@ namespace PGenerator.View
     public partial class LoginWindow : Window
     {
         private string actualPassword = "";
+        private bool showActualPassword = false;
         public LoginWindow() { }
         
         public LoginWindow(IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
@@ -21,12 +22,22 @@ namespace PGenerator.View
 
         private void Passwordtxt_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Passwordtxt.Text += "●";
-            actualPassword += e.Text;
-            Passwordtxt.CaretIndex = Passwordtxt.Text.Length;
-            e.Handled = true;
-
-            ((LoginViewModel)DataContext).SetPassword(actualPassword);
+            if (((LoginViewModel)DataContext).PasswordVisibility)
+            {
+                Passwordtxt.Text += e.Text;
+                actualPassword += e.Text;
+                Passwordtxt.CaretIndex = Passwordtxt.Text.Length;
+                e.Handled = true;
+                ((LoginViewModel)DataContext).SetPassword(actualPassword);
+            }
+            else
+            {
+                Passwordtxt.Text += "●";
+                actualPassword += e.Text;
+                Passwordtxt.CaretIndex = Passwordtxt.Text.Length;
+                e.Handled = true;
+                ((LoginViewModel)DataContext).SetPassword(actualPassword);
+            }
         }
 
         private void Passwordtxt_OnKeyDown(object sender, KeyEventArgs e)
@@ -36,6 +47,22 @@ namespace PGenerator.View
                 if (!string.IsNullOrEmpty(actualPassword))
                 {
                     actualPassword = actualPassword.Remove(actualPassword.Length - 1);
+                }
+            }
+        }
+
+        private void ShowPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!((LoginViewModel)DataContext).PasswordVisibility)
+            {
+                Passwordtxt.Text = actualPassword;
+            }
+            else
+            {
+                Passwordtxt.Text = "";
+                for (int i = 0; i < actualPassword.Length; i++)
+                {
+                    Passwordtxt.Text += "●";
                 }
             }
         }
