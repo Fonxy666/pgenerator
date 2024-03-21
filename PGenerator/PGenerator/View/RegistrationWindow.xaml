@@ -95,89 +95,81 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             
-            <TextBox Grid.Row="0" Name="Emailtxt" Text="{Binding RegistrationRequest.Email}" Style="{StaticResource InputStyle}" Width="200">
-                <TextBox.Triggers>
-                    <EventTrigger RoutedEvent="GotFocus">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EmailPlaceholdertxt" Storyboard.TargetProperty="Visibility">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </TextBox.Triggers>
-            </TextBox>
-
-            <Grid Grid.Row="0" Name="EmailPlaceholdertxt"  Width="200">
-                <iconPacks:PackIconMaterial Kind="Email" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
-                <Label Content="E-mail..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
-            </Grid>
+            <TextBox Grid.Row="0" Name="Emailtxt" Text="{Binding RegistrationRequest.Email}" Style="{StaticResource InputStyle}" Width="200" Padding="25 10 10 10"/>
+            <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Email" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                    <TextBlock Text="Email..." Foreground="#6741d9" Opacity="0.5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Emailtxt}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </TextBlock>
             
-            <TextBox Grid.Row="1" Name="Usernametxt" Text="{Binding RegistrationRequest.UserName}" Style="{StaticResource InputStyle}" Width="200">
-                <TextBox.Triggers>
-                    <EventTrigger RoutedEvent="GotFocus">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="UsernamePlaceholdertxt" Storyboard.TargetProperty="Visibility">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </TextBox.Triggers>
-            </TextBox>
-
-            <Grid Grid.Row="1" Name="UsernamePlaceholdertxt" Width="200">
-                <iconPacks:PackIconMaterial Kind="HumanMale" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
-                <Label Content="Username..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
-            </Grid>
+            <TextBox Grid.Row="1" Name="Usernametxt" Text="{Binding RegistrationRequest.UserName}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBlock Grid.Row="1" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="HumanMale" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                    <TextBlock Text="Username..." Foreground="#6741d9" Opacity="0.5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Usernametxt}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </TextBlock>
             
-            <TextBox Grid.Row="2" Name="Passwordtxt" Text="{Binding RegistrationRequest.Password}" Style="{StaticResource InputStyle}" Width="200">
-                <TextBox.Triggers>
-                    <EventTrigger RoutedEvent="GotFocus">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PasswordPlaceholdertxt" Storyboard.TargetProperty="Visibility">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </TextBox.Triggers>
-            </TextBox>
-
-            <Grid Grid.Row="2" Name="PasswordPlaceholdertxt" Width="200">
-                <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
-                <Label Content="Password..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
-            </Grid>
+            <TextBox Grid.Row="2" Name="Passwordtxt" Text="{Binding RegistrationRequest.Password}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                    <TextBlock Text="Password..." Foreground="#6741d9" Opacity="0.5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Passwordtxt}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </TextBlock>
             
-            <TextBox Grid.Row="3" Name="RepeatPasswordtxt" Text="{Binding PasswordRepeat}" Style="{StaticResource InputStyle}" Width="200">
-                <TextBox.Triggers>
-                    <EventTrigger RoutedEvent="GotFocus">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RepeatPasswordPlaceholdertxt" Storyboard.TargetProperty="Visibility">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </TextBox.Triggers>
-            </TextBox>
-
-            <Grid Grid.Row="3" Name="RepeatPasswordPlaceholdertxt" Width="200">
-                <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="10 1 8 0"/>
-                <Label Content="Password again..." Foreground="#6741d9" VerticalAlignment="Center" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="25 1 8 0"/>
-            </Grid>
+            <TextBox Grid.Row="3" Name="RepeatPasswordtxt" Text="{Binding PasswordRepeat}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBlock Grid.Row="3" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                    <TextBlock Text="Password again..." Foreground="#6741d9" Opacity="0.5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Passwordtxt}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </TextBlock>
             
             <TextBlock Grid.Row="4" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Width="400" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}" TextWrapping="Wrap"/>
             
