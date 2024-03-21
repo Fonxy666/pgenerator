@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:visualBasic="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+        xmlns:pGenerator="clr-namespace:PGenerator"
         mc:Ignorable="d"
         Title="LoginWindow" Height="350" Width="500"
         WindowStartupLocation="CenterScreen"
@@ -177,7 +179,7 @@
                         </StackPanel>
                     </TextBlock>
                     
-                    <TextBox Grid.Row="2" x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource InputStyle}" Padding="25 10 10 10"/>
+                    <TextBox Grid.Row="2"  x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource InputStyle}" Padding="25 10 10 10" PreviewTextInput="Passwordtxt_PreviewTextInput" PreviewKeyDown="Passwordtxt_OnKeyDown"/>
                     <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>

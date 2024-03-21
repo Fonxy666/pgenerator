@@ -25,6 +25,8 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private string _errorMessage;
     private Visibility _errorMessageVisibility = Visibility.Collapsed;
     private ICommand _closeApplication;
+    private string _actualPassword;
+    
     public LoginViewModel() { }
 
     public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
@@ -99,10 +101,16 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             NotifyPropertyChanged(nameof(ErrorMessageVisibility));
         }
     }
+    
+    public void SetPassword(string password)
+    {
+        _actualPassword = password;
+    }
 
     private async void Login()
     {
-        var result = await _userService.Login(LoginRequest);
+        var request = new LoginRequest(LoginRequest.UserName, _actualPassword);
+        var result = await _userService.Login(request);
         if (result.Success)
         {
             var jwtToken = _tokenService.CreateJwtToken(result.User!, "User");
@@ -123,7 +131,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             ErrorMessageVisibility = Visibility.Visible;
         }
     }
-    
     
     public ICommand CloseApplication
     {
