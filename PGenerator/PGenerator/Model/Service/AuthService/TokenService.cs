@@ -6,9 +6,8 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using PGenerator.Model;
 
-namespace PGenerator.Service.AuthService;
+namespace PGenerator.Model.Service.AuthService;
 
 public class TokenService(IConfiguration configuration) : ITokenService
 {

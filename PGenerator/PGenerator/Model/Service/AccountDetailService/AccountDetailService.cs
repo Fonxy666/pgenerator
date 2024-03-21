@@ -1,22 +1,21 @@
 ﻿using PGenerator.Data;
-using PGenerator.Model;
-using PGenerator.Request;
-using PGenerator.Response;
-using PGenerator.Service.PasswordService;
+using PGenerator.Model.Request;
+using PGenerator.Model.Response;
+using PGenerator.Model.Service.PasswordService;
 
-namespace PGenerator.Service.InformationService;
+namespace PGenerator.Model.Service.AccountDetailService;
 
-public class InformationService(StorageContext context, byte[] secretKey, byte[] iv) : IInformationService
+public class AccountDetailService(AccountStorageContext context, byte[] secretKey, byte[] iv) : IAccountDetailService
 {
-    private StorageContext Context { get; set; } = context;
-    public IList<Database> ListInformation(Guid userId)
+    private AccountStorageContext Context { get; set; } = context;
+    public IList<AccountDetailShow> ListInformation(Guid userId)
     {
-        var existingList = Context.Information.Where(information => information.UserId == userId).ToList();
-        var newList = new List<Database>();
+        var existingList = Context.AccountDetails.Where(information => information.UserId == userId).ToList();
+        var newList = new List<AccountDetailShow>();
         for (var i = 0; i < existingList.Count; i++)
         {
             var newPassword = PasswordEncrypt.DecryptStringFromBytes_Aes(existingList[i].Password, secretKey, iv);
-            var newElement = new Database(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
+            var newElement = new AccountDetailShow(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
                 existingList[i].Created);
             newList.Add(newElement);
         }
@@ -24,11 +23,11 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         return newList;
     }
 
-    public async Task<Information> GetInformation(Guid infoId)
+    public async Task<AccountDetail> GetInformation(Guid infoId)
     {
         try
         {
-            return Context.Information.FirstOrDefault(info => info.Id == infoId)!;
+            return Context.AccountDetails.FirstOrDefault(info => info.Id == infoId)!;
         }
         catch (Exception e)
         {
@@ -37,13 +36,13 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         }
     }
 
-    public async Task<PublicResponse> AddNewInfo(Information request)
+    public async Task<PublicResponse> AddNewInfo(AccountDetail request)
     {
         try
         {
             if (!CheckApplicationExist(request.Application!))
             {
-                await Context.Information.AddAsync(request);
+                await Context.AccountDetails.AddAsync(request);
                 await Context.SaveChangesAsync();
                 return new PublicResponse(true, string.Empty);
             }
@@ -64,7 +63,7 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
         Console.WriteLine(infoId);
         try
         {
-            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == infoId);
+            var existingInfo = Context.AccountDetails.FirstOrDefault(info => info.Id == infoId);
             if (existingInfo != null)
             {
                 existingInfo.UserName = request.UserName;
@@ -93,8 +92,8 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
     {
         try
         {
-            var existingInfo = Context.Information.FirstOrDefault(info => info.Id == infoId);
-            Context.Information.Remove(existingInfo!);
+            var existingInfo = Context.AccountDetails.FirstOrDefault(info => info.Id == infoId);
+            Context.AccountDetails.Remove(existingInfo!);
             await Context.SaveChangesAsync();
 
             return new PublicResponse(true, string.Empty);
@@ -108,6 +107,6 @@ public class InformationService(StorageContext context, byte[] secretKey, byte[]
 
     private bool CheckApplicationExist(string application)
     {
-        return Context.Information.Any(info => info.Application == application);
+        return Context.AccountDetails.Any(info => info.Application == application);
     }
 }

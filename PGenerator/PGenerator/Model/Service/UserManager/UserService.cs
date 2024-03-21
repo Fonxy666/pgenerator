@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
-using PGenerator.Response;
 using Microsoft.AspNetCore.Identity;
-using PGenerator.Model;
-using PGenerator.Request;
+using Microsoft.EntityFrameworkCore;
+using PGenerator.Model.Request;
+using PGenerator.Model.Response;
 
-namespace PGenerator.Service.UserManager;
+namespace PGenerator.Model.Service.UserManager;
 
 public class UserService(UserManager<UserInformation> userManager) : IUserService
 {

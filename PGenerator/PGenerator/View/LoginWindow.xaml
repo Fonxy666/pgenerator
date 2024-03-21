@@ -4,40 +4,255 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:PGenerator.ViewModel"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="LoginWindow" Height="350" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
     
     <Window.DataContext>
         <viewModel:LoginViewModel />
     </Window.DataContext>
     
-   <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Grid ShowGridLines="False">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="20"/>
-            </Grid.RowDefinitions>
+    <Window.Resources>
+        <Style x:Key="LoginButton" TargetType="Button">
+            <Setter Property="Background" Value="#6741d9"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 20 0 0 "/>
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#7b5cd6"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Margin" Value="0 20 20 0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="SignInText" TargetType="Label">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Margin" Value="0 20 20 0"/>
+        </Style>
+        
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="15 10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBoxBase">
+                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                                BorderThickness="1" BorderBrush="#e0e6ed">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="CreateButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Foreground" Value="#0341fc"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        
+        <Style x:Key="RegisterGrid" TargetType="Grid">
+            <Setter Property="Margin" Value="10 10 10 10"/>
+        </Style>
+        
+        <Style x:Key="DontHaveAccountText" TargetType="Label">
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+        </Style>
+        
+        <Style x:Key="ShowPasswordButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="150 0 0 0 "/>
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#7b5cd6"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    
+    <Border CornerRadius="30">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="#6741d9"/>
+                <GradientStop Offset="0.1" Color="#6741d9"/>
+                <GradientStop Offset="0.9" Color="white"/>
+                <GradientStop Offset="1" Color="white"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid>
+                <Button Grid.Row="0" Style="{StaticResource CloseButton}" Command="{Binding CloseApplication}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
             
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <Label Grid.Row="0" Grid.Column="0" Content="Username:"  HorizontalAlignment="Left" Margin="5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="Usernametxt"
-                     Text="{Binding LoginRequest.UserName}"
-                     HorizontalAlignment="Left" MinWidth="130" VerticalAlignment="Center" />
-            <Label  Grid.Row="1" Grid.Column="0"  Content="Password:" HorizontalAlignment="Left" Width="103" Margin="5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Name="Passwordtxt" HorizontalAlignment="Left"
-                     Text="{Binding LoginRequest.Password}"
-                     MinWidth="130" VerticalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Content="Login" HorizontalAlignment="Left" Height="20" Width="60" Margin="10" Command="{Binding LoginCommand}"/>
-            <Button Grid.Row="2" Grid.Column="1" Content="Registration" HorizontalAlignment="Left" Height="20" Width="80" Margin="10" Command="{Binding ShowRegisterModal}"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}"
-                       TextWrapping="Wrap"/>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid ShowGridLines="False">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource SignInText}" Content="Sign in" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    
+                    <TextBox Grid.Row="1" x:Name="Usernametxt" Text="{Binding LoginRequest.UserName}" Style="{StaticResource InputStyle}"  Padding="25 10 10 10"/>
+                    <TextBlock Grid.Row="1" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="NaturePeople" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                            <TextBlock Text="Username..." Foreground="#6741d9" Opacity="0.5">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=Usernametxt}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </TextBlock>
+                    
+                    <TextBox Grid.Row="2"  x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource InputStyle}" Padding="25 10 10 10" PreviewTextInput="Passwordtxt_PreviewTextInput" PreviewKeyDown="Passwordtxt_OnKeyDown"/>
+                    <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
+                            <TextBlock Text="Password..." Foreground="#6741d9" Opacity="0.5">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=Passwordtxt}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </TextBlock>
+                    
+                    <Button Grid.Row="2" Style="{StaticResource ShowPasswordButton}" Command="{Binding ChangePasswordVisibilityCommand}" Click="ShowPasswordButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Eye" Foreground="#6741d9" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20" Margin="0 1 8 0"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ErrorMessage" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}"
+                               TextWrapping="Wrap" />
+                    
+                    <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource LoginButton}" Command="{Binding LoginCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconMaterial Kind="Login" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
+                            <TextBlock Text="Sign in"/>
+                        </StackPanel>
+                    </Button>
+                    
+                    <Grid Grid.Row="5" Style="{StaticResource RegisterGrid}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Column="0" Content="Don't have an account?" Style="{StaticResource DontHaveAccountText}"/>
+                        
+                        <Button Grid.Column="1" Style="{StaticResource CreateButton}" Command="{Binding ShowRegisterModal}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="13" Text="Create"></TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

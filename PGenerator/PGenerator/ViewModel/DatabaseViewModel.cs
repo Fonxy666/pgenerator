@@ -1,52 +1,51 @@
 ﻿using System.Windows.Forms;
 using System.Windows.Input;
-using PGenerator.ICommandUpdater;
+using PGenerator.CommandUpdater;
 using PGenerator.Model;
-using PGenerator.Request;
-using PGenerator.Response;
-using PGenerator.Service.InformationService;
-using PGenerator.Service.PasswordService;
+using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.PasswordService;
 using PGenerator.View;
 
 namespace PGenerator.ViewModel;
 
 public class DatabaseViewModel : NotifyPropertyChangedHandler
 {
-    private readonly IInformationService _informationService;
+    private readonly IAccountDetailService _accountDetailService;
     private readonly Guid _userId;
     private ICommand _addCommand;
     private ICommand _updateCommand;
     private ICommand _deleteCommand;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
+    private IList<AccountDetailShow> _accountDetail;
+    private AccountDetailShow _selectedInformation;
+    private string _accountDetailCount;
+    private ICommand _closeApplication;
 
     public DatabaseViewModel() { }
-    public DatabaseViewModel(IInformationService informationService, Guid userId, byte[] secretKey, byte[] iv)
+    public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
     {
-        _informationService = informationService;
+        _accountDetailService = accountDetailService;
         _userId = userId;
         _secretKey = secretKey;
         _iv = iv;
-        SelectedInformation = new Database(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, DateTime.Now);
-        Information = new List<Database>();
+        SelectedInformation = new AccountDetailShow(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, DateTime.Now);
+        AccountDetail = new List<AccountDetailShow>();
+        _accountDetailCount = $"{AccountDetail.Count} added accounts.";
         FetchData();
     }
     
-    private IList<Database> _information;
-
-    public IList<Database> Information
+    public IList<AccountDetailShow> AccountDetail
     {
-        get => _information;
+        get => _accountDetail;
         set
         {
-            _information = value;
-            NotifyPropertyChanged("Information");
+            _accountDetail = value;
+            NotifyPropertyChanged("AccountDetail");
         }
     }
     
-    private Database _selectedInformation;
-
-    public Database SelectedInformation
+    public AccountDetailShow SelectedInformation
     {
         get => _selectedInformation;
         set
@@ -58,8 +57,10 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void FetchData()
     {
-        Information = _informationService.ListInformation(_userId);
-        NotifyPropertyChanged(nameof(Information));
+        AccountDetail = _accountDetailService.ListInformation(_userId);
+        _accountDetailCount = $"{AccountDetail.Count} added accounts.";
+        AccountDetailCount = _accountDetailCount;
+        NotifyPropertyChanged(nameof(AccountDetail));
     }
     
     public ICommand AddCommand
@@ -77,7 +78,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void AddNewInfo()
     {
-        var informationWindow = new InformationWindow(_userId, _informationService, _secretKey, _iv);
+        var informationWindow = new AccountDetailsModalWindow(_userId, _accountDetailService, _secretKey, _iv);
         informationWindow.ShowDialog();
         FetchData();
     }
@@ -97,11 +98,11 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void UpdateInfo()
     {
-        var newInfo = new Information(_userId, SelectedInformation.Application, SelectedInformation.Username, PasswordEncrypt.EncryptStringToBytes_Aes(SelectedInformation.Password, _secretKey, _iv))
+        var newInfo = new AccountDetail(_userId, SelectedInformation.Application, SelectedInformation.Username, PasswordEncrypt.EncryptStringToBytes_Aes(SelectedInformation.Password, _secretKey, _iv))
         {
             Id = SelectedInformation.InfoId
         };
-        var informationWindow = new InformationWindow(newInfo, _informationService, _secretKey, _iv);
+        var informationWindow = new AccountDetailsModalWindow(newInfo, _accountDetailService, _secretKey, _iv);
         informationWindow.ShowDialog();
         FetchData();
     }
@@ -121,11 +122,20 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private async void DeleteInfo()
     {
-        var result = await _informationService.DeleteInfo(SelectedInformation.InfoId);
+        var result = await _accountDetailService.DeleteInfo(SelectedInformation.InfoId);
         if (result.Success)
         {
             MessageBox.Show($"Info for application: {SelectedInformation.Application} got deleted successfully.");
             FetchData();
+        }
+    }
+    
+    public string AccountDetailCount
+    {
+        get => _accountDetailCount;
+        set
+        {
+            _accountDetailCount = value; NotifyPropertyChanged("AccountDetailCount");
         }
     }
 }

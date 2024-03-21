@@ -1,8 +1,7 @@
-﻿using PGenerator.Model;
-using PGenerator.Request;
-using PGenerator.Response;
+﻿using PGenerator.Model.Request;
+using PGenerator.Model.Response;
 
-namespace PGenerator.Service.UserManager;
+namespace PGenerator.Model.Service.UserManager;
 
 public interface IUserService
 {

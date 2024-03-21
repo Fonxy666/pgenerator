@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using PGenerator.ICommandUpdater;
-using PGenerator.Request;
-using PGenerator.Service.UserManager;
+using PGenerator.CommandUpdater;
+using PGenerator.Model.Request;
+using PGenerator.Model.Service.UserManager;
 
 namespace PGenerator.ViewModel;
 
@@ -10,6 +10,11 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
     private readonly IUserService _userService;
+    private RegistrationRequest? _registrationRequest;
+    private string _errorMessage;
+    private ICommand _registrationCommand;
+    private ICommand _backCommand;
+    private Visibility _errorMessageVisibility = Visibility.Collapsed;
     
     public RegistrationViewModel() {}
     
@@ -20,7 +25,6 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         RegistrationRequest = new RegistrationRequest("", "", "");
     }
     
-    private string _errorMessage;
 
     public string ErrorMessage
     {
@@ -31,8 +35,6 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private RegistrationRequest? _registrationRequest;
-
     public RegistrationRequest RegistrationRequest
     {
         get => _registrationRequest;
@@ -42,8 +44,6 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private ICommand _registrationCommand;
-
     public ICommand RegistrationCommand
     {
         get
@@ -79,8 +79,6 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private ICommand _backCommand;
-
     public ICommand BackCommand
     {
         get
@@ -130,8 +128,6 @@ public class RegistrationViewModel : NotifyPropertyChangedHandler
         get => _passwordRepeat;
         set { _passwordRepeat = value; NotifyPropertyChanged("PasswordRepeat"); }
     }
-    
-    private Visibility _errorMessageVisibility = Visibility.Collapsed;
 
     public Visibility ErrorMessageVisibility
     {

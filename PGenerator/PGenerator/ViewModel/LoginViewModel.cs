@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using PGenerator.ICommandUpdater;
-using PGenerator.Request;
-using PGenerator.Service.AuthService;
-using PGenerator.Service.InformationService;
-using PGenerator.Service.UserManager;
-using PGenerator.TokenStorageFolder;
+using PGenerator.CommandUpdater;
+using PGenerator.Data.TokenStorageFolder;
+using PGenerator.Model.Request;
+using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.AuthService;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.View;
 
 namespace PGenerator.ViewModel;
@@ -16,24 +16,35 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private readonly IUserService _userService;
     private readonly ITokenService _tokenService;
     private readonly ITokenStorage _tokenStorage;
-    private readonly IInformationService _informationService;
+    private readonly IAccountDetailService _accountDetailService;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
+    private LoginRequest _loginRequest;
+    private ICommand _showRegisterModal;
+    private ICommand _loginCommand;
+    private string _errorMessage;
+    private Visibility _errorMessageVisibility = Visibility.Collapsed;
+    private ICommand _closeApplication;
+    private ICommand _changePasswordVisibility;
+    private bool _passwordVisibility;
+
+    public string ActualPassword { get; set; }
+    
+    
     public LoginViewModel() { }
 
-    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IInformationService informationService, byte[] secretKey, byte[] iv)
+    public LoginViewModel(Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage, IAccountDetailService accountDetailService, byte[] secretKey, byte[] iv)
     {
         _window = window;
         _userService = userService;
         _tokenService = tokenService;
         _tokenStorage = tokenStorage;
-        _informationService = informationService;
+        _accountDetailService = accountDetailService;
         _secretKey = secretKey;
         _iv = iv;
         _loginRequest = new LoginRequest(string.Empty, string.Empty);
     }
-
-    private LoginRequest _loginRequest;
+    
     public LoginRequest LoginRequest
     {
         get => _loginRequest; 
@@ -46,7 +57,36 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private RelayCommand _showRegisterModal;
+    public bool PasswordVisibility
+    {
+        get => _passwordVisibility; 
+        set
+        {
+            if (_passwordVisibility != value)
+            {
+                _passwordVisibility = value;
+            }
+        }
+    }
+    
+    public ICommand ChangePasswordVisibilityCommand
+    {
+        get
+        {
+            if (_changePasswordVisibility == null)
+            {
+                _changePasswordVisibility = new RelayCommand(param => ChangePasswordVisibilityMethod(), null);
+            }
+            return _changePasswordVisibility;
+        }
+    }
+
+    private void ChangePasswordVisibilityMethod()
+    {
+        PasswordVisibility = !PasswordVisibility;
+        NotifyPropertyChanged("Password");
+    }
+
     public ICommand ShowRegisterModal
     {
         get
@@ -65,8 +105,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         registrationWindow.ShowDialog();
     }
     
-    private RelayCommand _loginCommand;
-
     public ICommand LoginCommand
     {
         get
@@ -79,8 +117,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private string _errorMessage;
-
     public string ErrorMessage
     {
         get => _errorMessage;
@@ -90,8 +126,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
         }
     }
     
-    private Visibility _errorMessageVisibility = Visibility.Collapsed;
-
     public Visibility ErrorMessageVisibility
     {
         get => _errorMessageVisibility;
@@ -101,10 +135,16 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             NotifyPropertyChanged(nameof(ErrorMessageVisibility));
         }
     }
+    
+    public void SetPassword(string password)
+    {
+        ActualPassword = password;
+    }
 
     private async void Login()
     {
-        var result = await _userService.Login(LoginRequest);
+        var request = new LoginRequest(LoginRequest.UserName, ActualPassword);
+        var result = await _userService.Login(request);
         if (result.Success)
         {
             var jwtToken = _tokenService.CreateJwtToken(result.User!, "User");
@@ -112,7 +152,7 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
             if (Guid.TryParse(result.User!.Id, out var guid))
             {
-                var databaseWindow = new DatabaseWindow(_informationService, guid, _secretKey, _iv);
+                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv);
                 ErrorMessageVisibility = Visibility.Hidden;
                 _window.Close();
                 
@@ -124,5 +164,23 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             ErrorMessage = result.Message!;
             ErrorMessageVisibility = Visibility.Visible;
         }
+    }
+    
+    public ICommand CloseApplication
+    {
+        get
+        {
+            if (_closeApplication == null)
+            {
+                _closeApplication = new RelayCommand(param => CloseApp(), null);
+            }
+
+            return _closeApplication;
+        }
+    }
+
+    private void CloseApp()
+    {
+        _window.Close();
     }
 }

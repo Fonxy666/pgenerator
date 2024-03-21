@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
 
-namespace PGenerator.Service.PasswordService;
+namespace PGenerator.Model.Service.PasswordService;
 
 public static class PasswordEncrypt
 {
