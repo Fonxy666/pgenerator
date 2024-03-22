@@ -557,7 +557,7 @@
                 <Button Grid.Row="0" Style="{StaticResource AddButton}" Command="{Binding AddCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
-                        <TextBlock Text="Add New Member"></TextBlock>
+                        <TextBlock Text="Add New Account"/>
                     </StackPanel>
                 </Button>
                 
@@ -573,9 +573,13 @@
                 
                 <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
                     <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False" Panel.ZIndex="1" Text="Filter here..."
-                               Visibility="{Binding ElementName=txtFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                               Visibility="{Binding ElementName=txtFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
                     
-                    <TextBox x:Name="txtFilter" Style="{StaticResource TextboxSearch}"></TextBox>
+                    <TextBox x:Name="txtFilter" Style="{StaticResource TextboxSearch}" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding FilterCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
                 </Grid>

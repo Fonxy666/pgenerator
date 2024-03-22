@@ -17,6 +17,7 @@
     </Window.DataContext>
     
     <Window.Resources>
+        
         <Style x:Key="LoginButton" TargetType="Button">
             <Setter Property="Background" Value="#6741d9"/>
             <Setter Property="Foreground" Value="#ffffff"/>
@@ -75,6 +76,34 @@
         </Style>
         
         <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Foreground" Value="#6741d9"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="15 10"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBoxBase">
+                        <Border x:Name="border" CornerRadius="20" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                                BorderThickness="1" BorderBrush="#e0e6ed">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#d9d9d9" TargetName="border" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="PasswordStyle" TargetType="TextBox">
             <Setter Property="Background" Value="#ffffff"/>
             <Setter Property="Foreground" Value="#6741d9"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -202,7 +231,7 @@
                         </StackPanel>
                     </TextBlock>
                     
-                    <TextBox Grid.Row="2"  x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource InputStyle}" Padding="25 10 10 10" PreviewTextInput="Passwordtxt_PreviewTextInput" PreviewKeyDown="Passwordtxt_OnKeyDown"/>
+                    <TextBox Grid.Row="2" FontFamily="Webdings" x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource PasswordStyle}" Padding="25 10 10 10"/>
                     <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
@@ -221,7 +250,7 @@
                         </StackPanel>
                     </TextBlock>
                     
-                    <Button Grid.Row="2" Style="{StaticResource ShowPasswordButton}" Command="{Binding ChangePasswordVisibilityCommand}" Click="ShowPasswordButton_Click">
+                    <Button Grid.Row="2" Style="{StaticResource ShowPasswordButton}" Click="ShowPasswordButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial Kind="Eye" Foreground="#6741d9" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20" Margin="0 1 8 0"/>
                         </StackPanel>

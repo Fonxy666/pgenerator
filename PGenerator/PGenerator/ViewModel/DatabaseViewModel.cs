@@ -20,7 +20,9 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private IList<AccountDetailShow> _accountDetail;
     private AccountDetailShow _selectedInformation;
     private string _accountDetailCount;
+    public ICommand _filterCommand;
     private ICommand _closeApplication;
+    private string _filterText;
 
     public DatabaseViewModel() { }
     public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
@@ -57,7 +59,7 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void FetchData()
     {
-        AccountDetail = _accountDetailService.ListInformation(_userId);
+        AccountDetail = _accountDetailService.ListDetails(_userId);
         _accountDetailCount = $"{AccountDetail.Count} added accounts.";
         AccountDetailCount = _accountDetailCount;
         NotifyPropertyChanged(nameof(AccountDetail));
@@ -83,6 +85,46 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         FetchData();
     }
     
+    
+    public string FilterText
+    {
+        get { return _filterText; }
+        set
+        {
+            if (_filterText != value)
+            {
+                _filterText = value;
+                NotifyPropertyChanged(nameof(FilterText));
+            }
+        }
+    }
+    
+    public ICommand FilterCommand
+    {
+        get
+        {
+            if (_filterCommand == null)
+            {
+                _filterCommand = new RelayCommand(param => FilterMethod(), null);
+            }
+
+            return _filterCommand;
+        }
+    }
+
+    private void FilterMethod()
+    {
+        FetchData();
+        if (FilterText != string.Empty)
+        {
+            AccountDetail = _accountDetailService.FilterDetails(FilterText);
+        }
+        else
+        {
+            FetchData();
+        }
+    }
+
     public ICommand UpdateCommand
     {
         get
@@ -138,4 +180,6 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
             _accountDetailCount = value; NotifyPropertyChanged("AccountDetailCount");
         }
     }
+
+    
 }
