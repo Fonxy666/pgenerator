@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.Windows;
 using PGenerator.Data.TokenStorageFolder;
 using PGenerator.Model.Service.AccountDetailService;
 using PGenerator.Model.Service.AuthService;
@@ -19,8 +20,21 @@ namespace PGenerator.View
 
         private void ShowPasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            ((LoginViewModel)DataContext).PasswordVisibility = !((LoginViewModel)DataContext).PasswordVisibility;
-            Console.WriteLine(((LoginViewModel)DataContext).PasswordVisibility);
+            if (DataContext is LoginViewModel viewModel)
+            {
+                if (Passwordtxt != null)
+                {
+                    if (viewModel.PasswordVisibility)
+                    {
+                        Passwordtxt.FontFamily = new System.Windows.Media.FontFamily("Webdings");
+                    }
+                    else
+                    {
+                        Passwordtxt.FontFamily = new System.Windows.Media.FontFamily("SansSheriff");
+                    }
+                    viewModel.PasswordVisibility = !viewModel.PasswordVisibility;
+                }
+            }
         }
     }
 }
