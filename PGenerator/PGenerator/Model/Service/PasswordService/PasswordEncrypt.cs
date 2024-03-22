@@ -21,13 +21,13 @@ public static class PasswordEncrypt
             aesAlg.Key = key;
             aesAlg.IV = iv;
 
-            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
-            using (MemoryStream msEncrypt = new MemoryStream())
+            using (var msEncrypt = new MemoryStream())
             {
-                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                 {
-                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    using (var swEncrypt = new StreamWriter(csEncrypt))
                     {
                         swEncrypt.Write(plainText);
                     }
@@ -55,13 +55,13 @@ public static class PasswordEncrypt
             aesAlg.Key = key;
             aesAlg.IV = iv;
 
-            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-            using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+            using (var msDecrypt = new MemoryStream(cipherText))
             {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                 {
-                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    using (var srDecrypt = new StreamReader(csDecrypt))
                     {
                         plaintext = srDecrypt.ReadToEnd();
                     }

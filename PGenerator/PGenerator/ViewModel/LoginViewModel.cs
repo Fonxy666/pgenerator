@@ -128,7 +128,7 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             {
                 var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv);
                 ErrorMessageVisibility = Visibility.Hidden;
-                _window.Close();
+                /*_window.Close();*/
                 
                 databaseWindow.ShowDialog();
             }

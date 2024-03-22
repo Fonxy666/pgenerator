@@ -114,7 +114,7 @@
                 </StackPanel>
             </TextBlock>
             
-            <TextBox Grid.Row="1" Name="Usernametxt" Text="{Binding RegistrationRequest.UserName}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBox Grid.Row="1" Name="Usernametxt" Text="{Binding RegistrationRequest.UserName}" Style="{StaticResource InputStyle}" Width="200" Padding="25 10 10 10"/>
             <TextBlock Grid.Row="1" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="HumanMale" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
@@ -133,7 +133,7 @@
                 </StackPanel>
             </TextBlock>
             
-            <TextBox Grid.Row="2" Name="Passwordtxt" Text="{Binding RegistrationRequest.Password}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBox Grid.Row="2" Name="Passwordtxt" Text="{Binding Password}" Style="{StaticResource InputStyle}" Width="200" Padding="25 10 10 10"/>
             <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
@@ -152,7 +152,7 @@
                 </StackPanel>
             </TextBlock>
             
-            <TextBox Grid.Row="3" Name="RepeatPasswordtxt" Text="{Binding PasswordRepeat}" Style="{StaticResource InputStyle}" Width="200"/>
+            <TextBox Grid.Row="3" Name="RepeatPasswordtxt" Text="{Binding PasswordRepeat}" Style="{StaticResource InputStyle}" Width="200" Padding="25 10 10 10"/>
             <TextBlock Grid.Row="3" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="70,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>
@@ -161,7 +161,7 @@
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=Passwordtxt}" Value="">
+                                    <DataTrigger Binding="{Binding Text, ElementName=RepeatPasswordtxt}" Value="">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -171,7 +171,7 @@
                 </StackPanel>
             </TextBlock>
             
-            <TextBlock Grid.Row="4" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Left" Margin="2,5,0,5" Width="400" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}" TextWrapping="Wrap"/>
+            <TextBlock Grid.Row="4" x:Name="ErrorMessage" Foreground="Red" HorizontalAlignment="Center" Margin="2,5,0,5" Width="400" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessageVisibility}" TextWrapping="Wrap"/>
             
             <Grid Grid.Row="5">
                 <Button Style="{StaticResource Button}" Margin="0 0 170 0 " Command="{Binding RegistrationCommand}">

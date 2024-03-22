@@ -34,8 +34,10 @@ public partial class App : Application
         var connectionString = configuration["ConnectionString"];
         var issueAudience = configuration["IssueAudience"];
         var issueSign = configuration["IssueSign"];
-        var key = GetKey();
-        var iv = GetIV();
+        var secretKey = configuration["SecretKey"]!;
+        var keyAsByte = Array.ConvertAll(secretKey.Split(','), byte.Parse);
+        var ivKey = configuration["Iv"]!;
+        var ivAsByte = Array.ConvertAll(ivKey.Split(','), byte.Parse);
         
         var dataProtectionProvider = DataProtectionProvider.Create("YourApplicationName");
         
@@ -48,7 +50,7 @@ public partial class App : Application
                 services.AddScoped<IAccountDetailService, AccountDetailService>(serviceProvider =>
                 {
                     var storageContext = serviceProvider.GetRequiredService<AccountStorageContext>();
-                    return new AccountDetailService(storageContext, key, iv);
+                    return new AccountDetailService(storageContext, keyAsByte, ivAsByte);
                 });
                 services.AddScoped<LoginWindow>(serviceProvider =>
                 {
@@ -56,7 +58,7 @@ public partial class App : Application
                     var tokenService = serviceProvider.GetRequiredService<ITokenService>();
                     var tokenStorage = serviceProvider.GetRequiredService<ITokenStorage>();
                     var informationService = serviceProvider.GetRequiredService<IAccountDetailService>();
-                    return new LoginWindow(userService, tokenService, tokenStorage, informationService, key, iv);
+                    return new LoginWindow(userService, tokenService, tokenStorage, informationService, keyAsByte, ivAsByte);
                 });
                 services.AddScoped<RegistrationWindow>();
                 services.AddScoped<DatabaseWindow>();
@@ -150,55 +152,5 @@ public partial class App : Application
     {
         await AppHost!.StopAsync();
         base.OnExit(e);
-    }
-    
-    private static byte[] GenerateKey()
-    {
-        using (var aes = Aes.Create())
-        {
-            aes.GenerateKey();
-            return aes.Key;
-        }
-    }
-
-    private static byte[] GenerateIV()
-    {
-        using (var aes = Aes.Create())
-        {
-            aes.GenerateIV();
-            return aes.IV;
-        }
-    }
-    
-    private static byte[] GetKey()
-    {
-        const string filePath = "key.bin";
-
-        if (File.Exists(filePath))
-        {
-            return File.ReadAllBytes(filePath);
-        }
-        else
-        {
-            var key = GenerateKey();
-            File.WriteAllBytes(filePath, key);
-            return key;
-        }
-    }
-
-    private static byte[] GetIV()
-    {
-        const string filePath = "iv.bin";
-
-        if (File.Exists(filePath))
-        {
-            return File.ReadAllBytes(filePath);
-        }
-        else
-        {
-            var iv = GenerateIV();
-            File.WriteAllBytes(filePath, iv);
-            return iv;
-        }
     }
 }
