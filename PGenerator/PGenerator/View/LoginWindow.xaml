@@ -231,7 +231,7 @@
                         </StackPanel>
                     </TextBlock>
                     
-                    <TextBox Grid.Row="2" FontFamily="Webdings" x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource PasswordStyle}" Padding="25 10 10 10"/>
+                    <TextBox Grid.Row="2" FontFamily="Webdings" x:Name="Passwordtxt" Text="{Binding LoginRequest.Password}" Style="{StaticResource PasswordStyle}" Padding="25 10 40 10"/>
                     <TextBlock Grid.Row="2" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconMaterial Kind="Key" VerticalAlignment="Center" Width="15" Height="15" Foreground="#6741d9" Margin="0 1 5 0"/>

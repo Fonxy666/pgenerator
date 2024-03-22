@@ -1,10 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using System.Windows;
 using System.Windows.Input;
 using PGenerator.CommandUpdater;
 using PGenerator.Model;
 using PGenerator.Model.Service.AccountDetailService;
 using PGenerator.Model.Service.PasswordService;
 using PGenerator.View;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace PGenerator.ViewModel;
 
@@ -15,18 +16,24 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private ICommand _addCommand;
     private ICommand _updateCommand;
     private ICommand _deleteCommand;
+    private ICommand _filterCommand;
+    private ICommand _closeApplication;
+    private ICommand _logoutCommand;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
     private IList<AccountDetailShow> _accountDetail;
     private AccountDetailShow _selectedInformation;
     private string _accountDetailCount;
-    public ICommand _filterCommand;
-    private ICommand _closeApplication;
+    private readonly Window _window;
+    private readonly Window _loginWindow;
+    
     private string _filterText;
 
     public DatabaseViewModel() { }
-    public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv)
+    public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv, Window window, Window loginWindow)
     {
+        _window = window;
+        _loginWindow = loginWindow;
         _accountDetailService = accountDetailService;
         _userId = userId;
         _secretKey = secretKey;
@@ -180,6 +187,41 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
             _accountDetailCount = value; NotifyPropertyChanged("AccountDetailCount");
         }
     }
-
     
+    public ICommand CloseApplication
+    {
+        get
+        {
+            if (_closeApplication == null)
+            {
+                _closeApplication = new RelayCommand(param => CloseApp(), null);
+            }
+
+            return _closeApplication;
+        }
+    }
+
+    private void CloseApp()
+    {
+        Application.Current.Shutdown();
+    }
+    
+    public ICommand LogoutCommand
+    {
+        get
+        {
+            if (_logoutCommand == null)
+            {
+                _logoutCommand = new RelayCommand(param => LogoutMethod(), null);
+            }
+
+            return _logoutCommand;
+        }
+    }
+
+    private void LogoutMethod()
+    {
+        _loginWindow.Visibility = Visibility.Visible;
+        _window.Close();
+    }
 }

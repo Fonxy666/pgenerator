@@ -25,7 +25,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private string _errorMessage;
     private Visibility _errorMessageVisibility = Visibility.Collapsed;
     private ICommand _closeApplication;
-    private ICommand _changePasswordVisibility;
     private bool _passwordVisibility;
     
     public LoginViewModel() { }
@@ -126,10 +125,12 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
             if (Guid.TryParse(result.User!.Id, out var guid))
             {
-                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv);
+                _loginRequest = new LoginRequest(string.Empty, string.Empty);
+                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv, _window);
                 ErrorMessageVisibility = Visibility.Hidden;
                 /*_window.Close();*/
-                
+
+                _window.Visibility = Visibility.Hidden;
                 databaseWindow.ShowDialog();
             }
         }
@@ -155,6 +156,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
 
     private void CloseApp()
     {
-        _window.Close();
+        Application.Current.Shutdown();
     }
 }

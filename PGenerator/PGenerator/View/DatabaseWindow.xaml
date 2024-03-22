@@ -405,6 +405,26 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#623ED0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Margin" Value="120 20 20 0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!--#endregion-->
 
@@ -494,6 +514,15 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
+            <Grid Grid.Column="1">
+                <Button Grid.Row="0" Style="{StaticResource CloseButton}" Command="{Binding CloseApplication}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            
             <Button Margin="20 28 0 35" Style="{StaticResource TopButton}">
                 <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
             </Button>
@@ -521,7 +550,7 @@
                         </Button>
                     </StackPanel>
                     
-                    <Button Style="{StaticResource MenuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0">
+                    <Button Style="{StaticResource MenuButton}" Command="{Binding LogoutCommand}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource MenuButtonIcon}"></Icon:PackIconMaterial>
                             <TextBlock Text="Logout"></TextBlock>
