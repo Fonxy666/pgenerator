@@ -27,9 +27,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
     private ICommand _closeApplication;
     private ICommand _changePasswordVisibility;
     private bool _passwordVisibility;
-
-    public string ActualPassword { get; set; }
-    
     
     public LoginViewModel() { }
 
@@ -67,24 +64,6 @@ public class LoginViewModel : NotifyPropertyChangedHandler
                 _passwordVisibility = value;
             }
         }
-    }
-    
-    public ICommand ChangePasswordVisibilityCommand
-    {
-        get
-        {
-            if (_changePasswordVisibility == null)
-            {
-                _changePasswordVisibility = new RelayCommand(param => ChangePasswordVisibilityMethod(), null);
-            }
-            return _changePasswordVisibility;
-        }
-    }
-
-    private void ChangePasswordVisibilityMethod()
-    {
-        PasswordVisibility = !PasswordVisibility;
-        NotifyPropertyChanged("Password");
     }
 
     public ICommand ShowRegisterModal
@@ -135,15 +114,10 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             NotifyPropertyChanged(nameof(ErrorMessageVisibility));
         }
     }
-    
-    public void SetPassword(string password)
-    {
-        ActualPassword = password;
-    }
 
     private async void Login()
     {
-        var request = new LoginRequest(LoginRequest.UserName, ActualPassword);
+        var request = new LoginRequest(LoginRequest.UserName, LoginRequest.Password);
         var result = await _userService.Login(request);
         if (result.Success)
         {

@@ -8,7 +8,7 @@ namespace PGenerator.Model.Service.AccountDetailService;
 public class AccountDetailService(AccountStorageContext context, byte[] secretKey, byte[] iv) : IAccountDetailService
 {
     private AccountStorageContext Context { get; set; } = context;
-    public IList<AccountDetailShow> ListInformation(Guid userId)
+    public IList<AccountDetailShow> ListDetails(Guid userId)
     {
         var existingList = Context.AccountDetails.Where(information => information.UserId == userId).ToList();
         var newList = new List<AccountDetailShow>();
@@ -34,6 +34,21 @@ public class AccountDetailService(AccountStorageContext context, byte[] secretKe
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public IList<AccountDetailShow> FilterDetails(string filterText)
+    {
+        var existingList = Context.AccountDetails.Where(information => information.Application == filterText).ToList();
+        var newList = new List<AccountDetailShow>();
+        for (var i = 0; i < existingList.Count; i++)
+        {
+            var newPassword = PasswordEncrypt.DecryptStringFromBytes_Aes(existingList[i].Password, secretKey, iv);
+            var newElement = new AccountDetailShow(existingList[i].Id, existingList[i].Application!, existingList[i].UserName!, newPassword,
+                existingList[i].Created);
+            newList.Add(newElement);
+        }
+
+        return newList;
     }
 
     public async Task<PublicResponse> AddNewInfo(AccountDetail request)
