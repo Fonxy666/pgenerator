@@ -1,9 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Microsoft.Identity.Client;
 using PGenerator.CommandUpdater;
+using PGenerator.Data.TokenStorageFolder;
 using PGenerator.Model;
 using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.AuthService;
 using PGenerator.Model.Service.PasswordService;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.View;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -25,15 +29,16 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
     private AccountDetailShow _selectedInformation;
     private string _accountDetailCount;
     private readonly Window _window;
-    private readonly Window _loginWindow;
+    private readonly IUserService _userService;
+    private readonly ITokenService _tokenService;
+    private readonly ITokenStorage _tokenStorage;
     
     private string _filterText;
 
     public DatabaseViewModel() { }
-    public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv, Window window, Window loginWindow)
+    public DatabaseViewModel(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv, Window window, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage)
     {
         _window = window;
-        _loginWindow = loginWindow;
         _accountDetailService = accountDetailService;
         _userId = userId;
         _secretKey = secretKey;
@@ -41,6 +46,9 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
         SelectedInformation = new AccountDetailShow(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, DateTime.Now);
         AccountDetail = new List<AccountDetailShow>();
         _accountDetailCount = $"{AccountDetail.Count} added accounts.";
+        _userService = userService;
+        _tokenService = tokenService;
+        _tokenStorage = tokenStorage;
         FetchData();
     }
     
@@ -221,7 +229,9 @@ public class DatabaseViewModel : NotifyPropertyChangedHandler
 
     private void LogoutMethod()
     {
-        _loginWindow.Visibility = Visibility.Visible;
+        var loginWindow = new LoginWindow(_userService, _tokenService, _tokenStorage, _accountDetailService, _secretKey, _iv);
         _window.Close();
+
+        loginWindow.ShowDialog();
     }
 }

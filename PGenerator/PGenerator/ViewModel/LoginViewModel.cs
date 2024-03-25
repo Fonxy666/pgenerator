@@ -126,11 +126,9 @@ public class LoginViewModel : NotifyPropertyChangedHandler
             if (Guid.TryParse(result.User!.Id, out var guid))
             {
                 _loginRequest = new LoginRequest(string.Empty, string.Empty);
-                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv, _window);
-                ErrorMessageVisibility = Visibility.Hidden;
-                /*_window.Close();*/
+                var databaseWindow = new DatabaseWindow(_accountDetailService, guid, _secretKey, _iv, _userService, _tokenService, _tokenStorage);
+                _window.Close();
 
-                _window.Visibility = Visibility.Hidden;
                 databaseWindow.ShowDialog();
             }
         }
