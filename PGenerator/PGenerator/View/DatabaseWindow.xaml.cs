@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using PGenerator.Data.TokenStorageFolder;
 using PGenerator.Model.Service.AccountDetailService;
+using PGenerator.Model.Service.AuthService;
+using PGenerator.Model.Service.UserManager;
 using PGenerator.ViewModel;
 
 namespace PGenerator.View;
@@ -8,10 +11,10 @@ namespace PGenerator.View;
 public partial class DatabaseWindow : Window
 {
     public DatabaseWindow() { }
-    public DatabaseWindow(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv, Window loginWindow)
+    public DatabaseWindow(IAccountDetailService accountDetailService, Guid userId, byte[] secretKey, byte[] iv, IUserService userService, ITokenService tokenService, ITokenStorage tokenStorage)
     {
         InitializeComponent();
-        DataContext = new DatabaseViewModel(accountDetailService, userId, secretKey, iv, this,loginWindow);
+        DataContext = new DatabaseViewModel(accountDetailService, userId, secretKey, iv, this, userService, tokenService, tokenStorage);
     }
 
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)

@@ -48,18 +48,22 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7"
+                                Padding="15 3">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Padding" Value="20 3"/>
+                                <Setter Property="Background" Value="#7b5cd6"/>
+                                <Setter Property="Foreground" Value="#ffffff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#7b5cd6"></Setter>
-                    <Setter Property="Foreground" Value="#ffffff"></Setter>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         
         <Style x:Key="MenuButtonIcon" TargetType="Icon:PackIconMaterial">
@@ -541,15 +545,6 @@
                     
                     <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="#7e5fdc"></Separator>
                     
-                    <StackPanel DockPanel.Dock="Top">
-                        <Button Style="{StaticResource MenuButton}">
-                            <StackPanel Orientation="Horizontal">
-                                <Icon:PackIconMaterial/>
-                                <TextBlock Text="DashBoard"></TextBlock>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    
                     <Button Style="{StaticResource MenuButton}" Command="{Binding LogoutCommand}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0">
                         <StackPanel Orientation="Horizontal">
                             <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource MenuButtonIcon}"></Icon:PackIconMaterial>
@@ -571,22 +566,13 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 
-                <Grid Width="300" HorizontalAlignment="Left">
-                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Search here..." Visibility="{Binding ElementName=txtSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
-                    
-                    <TextBox x:Name="txtSearch" Style="{StaticResource TextboxSearch}"/>
-                    
-                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center" Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
-                </Grid>
-                
                 <TextBlock Text="Welcome" Grid.Row="1" FontSize="32" FontWeight="SemiBold" Margin="0 20 0 0" HorizontalAlignment="Left"
                            Foreground="#121518"/>
                 
                 <Button Grid.Row="0" Style="{StaticResource AddButton}" Command="{Binding AddCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
-                        <TextBlock Text="Add New Account"/>
+                        <TextBlock Text="Add new account"/>
                     </StackPanel>
                 </Button>
                 

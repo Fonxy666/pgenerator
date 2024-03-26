@@ -13,7 +13,7 @@ public class AccountDetailViewModel : NotifyPropertyChangedHandler
 {
     private readonly Window _window;
     private AccountDetail _accountDetail;
-    private IAccountDetailService _accountDetailService;
+    private readonly IAccountDetailService _accountDetailService;
     private readonly byte[] _secretKey;
     private readonly byte[] _iv;
     private readonly bool _updateInfo;
