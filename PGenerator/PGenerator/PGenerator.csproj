@@ -8,6 +8,7 @@
         <UseWPF>true</UseWPF>
         <UserSecretsId>bfb85e31-6299-4743-a2be-e39712c529b7</UserSecretsId>
         <LangVersion>preview</LangVersion>
+        <ApplicationIcon>Images\app_icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,10 +35,6 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Images\" />
     </ItemGroup>
 
     <ItemGroup>

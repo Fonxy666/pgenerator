@@ -39,18 +39,6 @@ public partial class App : Application
         var ivAsByte = Array.ConvertAll(ivKey.Split(','), byte.Parse);
         var dataProtectionProvider = DataProtectionProvider.Create("PGenerator");
         
-        if (!IsSqlServerContainerRunning())
-        {
-            StopAllRunningContainers();
-            Thread.Sleep(1000);
-            StartSqlServerContainer();
-        }
-        
-        while (!IsSqlServerContainerRunning())
-        {
-            Thread.Sleep(3000);
-        }
-        
         AppHost = Host.CreateDefaultBuilder()
             .ConfigureServices((hostContent, services) =>
             {
@@ -115,72 +103,6 @@ public partial class App : Application
             .Build();
     }
     
-    private void StopAllRunningContainers()
-    {
-        using (var process = new Process())
-        {
-            process.StartInfo.FileName = "docker";
-            process.StartInfo.Arguments = "ps -q";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-
-            string output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            string[] containerIds = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string containerId in containerIds)
-            {
-                StopContainer(containerId);
-            }
-        }
-    }
-    
-    private void StopContainer(string containerId)
-    {
-        using (var process = new Process())
-        {
-            process.StartInfo.FileName = "docker";
-            process.StartInfo.Arguments = $"stop {containerId}";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-        }
-    }
-
-    private void StartSqlServerContainer()
-    {
-        using (var process = new Process())
-        {
-            process.StartInfo.FileName = "docker";
-            process.StartInfo.Arguments = "start pgenerator-container";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            process.Start();
-        }
-    }
-
-    private bool IsSqlServerContainerRunning()
-    {
-        using (var process = new Process())
-        {
-            process.StartInfo.FileName = "docker";
-            process.StartInfo.Arguments = "ps --format '{{.Names}}' --filter name=pgenerator-container";
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            process.Start();
-            string output = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            return !string.IsNullOrWhiteSpace(output) && output.Contains("pgenerator-container");
-        }
-    }
-
     private static async Task SeedRoles(IServiceProvider serviceProvider, IConfiguration configuration)
     {
         var adminEmail = configuration["AdminEmail"];

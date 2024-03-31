@@ -8,9 +8,8 @@ namespace PGenerator.Data;
 
 public class UsersContext : IdentityDbContext<UserInformation, IdentityRole, string>
 {
-    public UsersContext(DbContextOptions<UsersContext> options) : base(options) { }
-    
     public UsersContext() { }
+    public UsersContext(DbContextOptions<UsersContext> options) : base(options) { }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

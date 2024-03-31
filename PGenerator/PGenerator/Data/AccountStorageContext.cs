@@ -7,10 +7,9 @@ namespace PGenerator.Data;
 public class AccountStorageContext : DbContext
 {
     public DbSet<AccountDetail> AccountDetails { get; set; }
-
+    public AccountStorageContext() { }
     public AccountStorageContext(DbContextOptions<AccountStorageContext> options) : base(options) { }
     
-    public AccountStorageContext() { }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
